@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Edunova - Frontend Developer Polaznici</title>
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <header class="main-header">
+    <h1>Edunova - Škola informatike</h1>
+    <p class="subtitle">Smjer: Frontend developer</p>
+  </header>
+
+  <main class="container">
+    <section>
+      <h2>Polaznici (Kliknite na sliku za otvaranje galerije)</h2>
+      <div id="grid-container" class="cards-grid">
+        <!-- Dinamički se generira iz JS-a -->
+      </div>
+    </section>
+  </main>
+
+  <!-- Fullscreen Modal Galerija -->
+  <div id="gallery-modal" class="modal">
+    <span class="modal-close">&times;</span>
+    
+    <button class="modal-nav prev-btn" id="prev-btn" aria-label="Prethodna slika">&#10094;</button>
+    
+    <div class="modal-content">
+      <img id="modal-img" src="" alt="">
+      <div id="modal-caption" class="modal-caption"></div>
+    </div>
+
+    <button class="modal-nav next-btn" id="next-btn" aria-label="Sljedeća slika">&#10095;</button>
+  </div>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Edunova | Polaznici - Frontend developer</title>
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+    <header class="header">
+        <div class="container">
+            <h1 class="header__logo">edu<span>nova</span></h1>
+            <p class="header__subtitle">Škola informatike i managementa</p>
+        </div>
+    </header>
+
+    <main class="container">
+
+        <section class="section">
+            <h2 class="section__title">Polaznici smjera <span>Frontend developer</span></h2>
+            <p class="section__desc">Kliknite na sliku polaznika za otvaranje galerije</p>
+            <div id="cards" class="cards"></div>
+        </section>
+
+    </main>
+
+    <!-- Galerija (lightbox) - otvara se klikom na sliku u kartičnom pregledu -->
+    <div id="lightbox" class="lightbox" hidden>
+        <button id="lightboxClose" class="lightbox__close" aria-label="Zatvori galeriju">&times;</button>
+        <button id="lightboxPrev" class="lightbox__arrow lightbox__arrow--prev"
+            aria-label="Prethodna slika">&#10094;</button>
+        <figure class="lightbox__figure">
+            <img id="lightboxImg" class="lightbox__img" src="" alt="">
+            <figcaption id="lightboxCaption" class="lightbox__caption"></figcaption>
+        </figure>
+        <button id="lightboxNext" class="lightbox__arrow lightbox__arrow--next"
+            aria-label="Sljedeća slika">&#10095;</button>
+    </div>
+
+    <footer class="footer">
+        <div class="container">
+            <p>&copy; 2026 Edunova - škola informatike i managementa | Smjer: Frontend developer</p>
+        </div>
+    </footer>
+
+    <script src="js/app.js"></script>
+</body>
+
+</html>

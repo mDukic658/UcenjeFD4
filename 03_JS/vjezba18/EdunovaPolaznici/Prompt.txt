@@ -1,0 +1,45 @@
+U direktoriju 03_JS\vjezba18\EdunovaPolaznici nalaze se tri direktorija img s slikama, i prazni js te css gdje ćeš ti stavljati css i js datoteke. Html stavljaj u 03_JS\vjezba18\EdunovaPolaznici. Želim da napravi pregled polaznika u školi Edunova na smjeru Frontend developer. Za svakog polaznika napravi sliku te mi pripremi ime i prezime koje ću ručno promjeniti. Uz kartični pregled koristeći css grid 4 slike po redu napravi i pregled galerije na način da se i na galeriji vidi ime i prezime.
+
+
+
+AI Prompt
+Kontekst i Putanje:
+Radiš na projektu u direktoriju 03_JS\vjezba18\EdunovaPolaznici.
+Struktura mapa je sljedeća:
+
+img/ (već sadrži slike polaznika)
+
+js/ (prazno, ovdje spremaj .js datoteke)
+
+css/ (prazno, ovdje spremaj .css datoteke)
+
+index.html (spremi direktno u korijen: 03_JS\vjezba18\EdunovaPolaznici)
+
+Zadatak:
+Izradi pregled polaznika škole Edunova, smjer Frontend developer. Sustav se sastoji od dva dijela: Kartični pregled i Galerija.
+
+Tehnički zahtjevi:
+
+HTML: Kreiraj index.html. Poveži vanjske CSS i JS datoteke iz pripadajućih mapa.
+
+Podaci: Generiraj niz (array) s polaznicima (objekata). Svaki polaznik treba imati placeholder za ime, prezime i putanju do slike iz mape img/.
+
+CSS Grid (Kartični pregled):
+
+Prikaži kartice polaznika u gridu s 4 stupca po redu na desktopu.
+
+Kartica mora sadržavati sliku polaznika, te ime i prezime ispod nje.
+
+Dizajn treba biti moderan i čist (Edunova branding stil).
+
+Galerija:
+
+Ispod kartičnog pregleda napravi galeriju slika.
+
+U galeriji slike trebaju biti ujednačene veličine (npr. object-fit: cover).
+
+Ime i prezime polaznika moraju biti vidljivi i na galeriji (npr. kao overlay efekt pri hoveru ili tekst ispod slike).
+
+JS: Koristi JavaScript za dinamičko renderiranje kartica i galerije iz pripremljenog niza podataka kako bih lakše mogao ručno promijeniti imena naknadno.
+
+Napomena: Koristi suvremeni CSS i čisti JavaScript (ES6+).

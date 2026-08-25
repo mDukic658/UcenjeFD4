@@ -1,0 +1,489 @@
+:root {
+    --edunova-plava: #005aa9;
+    --edunova-tamna: #003d73;
+    --edunova-narancasta: #f39200;
+
+    --pozadina: #f4f7fb;
+    --bijela: #ffffff;
+
+    --tekst: #2b2b2b;
+    --tekst-svijetli: #6b7a8f;
+
+    --sjena: 0 6px 18px rgba(0, 61, 115, 0.12);
+    --sjena-hover: 0 12px 28px rgba(0, 61, 115, 0.22);
+
+    --radius: 14px;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+
+    background-color: var(--pozadina);
+
+    color: var(--tekst);
+
+    line-height: 1.6;
+}
+
+
+.container {
+    width: min(1200px, 92%);
+    margin-inline: auto;
+}
+
+
+/* ---------- Header ---------- */
+
+.header {
+    background:
+        linear-gradient(135deg,
+            var(--edunova-tamna),
+            var(--edunova-plava));
+
+    color: var(--bijela);
+
+    padding: 2.5rem 0;
+
+    text-align: center;
+}
+
+
+.header__logo {
+    font-size: 2.8rem;
+    font-weight: 800;
+
+    letter-spacing: -1px;
+}
+
+
+.header__logo span {
+    color: var(--edunova-narancasta);
+}
+
+
+.header__subtitle {
+    font-size: 1.05rem;
+
+    opacity: 0.85;
+}
+
+
+/* ---------- Sekcija ---------- */
+
+.section {
+    padding: 3rem 0 1rem;
+}
+
+
+.section__title {
+    font-size: 1.9rem;
+
+    color: var(--edunova-tamna);
+}
+
+
+.section__title span {
+    color: var(--edunova-narancasta);
+}
+
+
+.section__desc {
+    color: var(--tekst-svijetli);
+
+    margin-bottom: 1.8rem;
+}
+
+
+/* ---------- Kartice ---------- */
+
+.cards {
+    display: grid;
+
+    grid-template-columns: repeat(4, 1fr);
+
+    gap: 1.5rem;
+}
+
+
+.card {
+    background: var(--bijela);
+
+    border-radius: var(--radius);
+
+    overflow: hidden;
+
+    box-shadow: var(--sjena);
+
+    transition:
+        transform 0.25s ease,
+        box-shadow 0.25s ease;
+}
+
+
+.card:hover {
+    transform: translateY(-6px);
+
+    box-shadow: var(--sjena-hover);
+}
+
+
+/* ---------- Video ---------- */
+
+.card__video-wrap {
+    position: relative;
+
+    aspect-ratio: 1 / 1;
+
+    overflow: hidden;
+
+    cursor: pointer;
+
+    background-color: #000;
+}
+
+
+.card__video {
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    display: block;
+
+    transition: transform 0.4s ease;
+}
+
+
+.card:hover .card__video {
+    transform: scale(1.06);
+}
+
+
+/* ---------- Play gumb ---------- */
+
+.video__play {
+    position: absolute;
+
+    top: 50%;
+    left: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 4rem;
+    height: 4rem;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    background: rgba(0, 61, 115, 0.85);
+
+    color: var(--bijela);
+
+    border: 3px solid var(--bijela);
+
+    border-radius: 50%;
+
+    font-size: 1.5rem;
+
+    padding-left: 0.2rem;
+
+    pointer-events: none;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.card__video-wrap:hover .video__play {
+    background: var(--edunova-narancasta);
+
+    transform:
+        translate(-50%, -50%) scale(1.1);
+}
+
+
+/* ---------- Podaci polaznika ---------- */
+
+.card__body {
+    padding: 1rem 1.2rem 1.3rem;
+
+    text-align: center;
+
+    border-top: 4px solid var(--edunova-narancasta);
+}
+
+
+.card__name {
+    font-size: 1.15rem;
+}
+
+
+.card__name a {
+    color: var(--edunova-tamna);
+
+    text-decoration: none;
+}
+
+
+.card__name a:hover {
+    color: var(--edunova-narancasta);
+
+    text-decoration: underline;
+}
+
+
+.card__role {
+    font-size: 0.85rem;
+
+    color: var(--tekst-svijetli);
+
+    text-transform: uppercase;
+
+    letter-spacing: 1px;
+}
+
+
+/* ---------- Videoteka preko cijelog ekrana ---------- */
+
+.no-scroll {
+    overflow: hidden;
+}
+
+
+.lightbox {
+    position: fixed;
+
+    inset: 0;
+
+    z-index: 1000;
+
+    background: rgba(0, 20, 40, 0.94);
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    gap: 1rem;
+
+    padding: 1rem;
+}
+
+
+.lightbox[hidden] {
+    display: none;
+}
+
+
+.lightbox__figure {
+    display: flex;
+
+    flex-direction: column;
+
+    align-items: center;
+
+    gap: 1rem;
+
+    max-width: 82vw;
+
+    max-height: 90vh;
+
+    margin: 0;
+}
+
+
+.lightbox__video {
+    max-width: 100%;
+
+    max-height: 74vh;
+
+    background: #000;
+
+    border-radius: var(--radius);
+
+    box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+
+/* ---------- Ime polaznika ---------- */
+
+.lightbox__caption {
+    color: var(--bijela);
+
+    font-size: 1.5rem;
+
+    font-weight: 700;
+
+    text-align: center;
+
+    background:
+        linear-gradient(135deg,
+            var(--edunova-tamna),
+            var(--edunova-plava));
+
+    padding: 0.5rem 2rem;
+
+    border-radius: 999px;
+
+    border-bottom: 3px solid var(--edunova-narancasta);
+}
+
+
+.lightbox__caption a {
+    color: var(--bijela);
+
+    text-decoration: none;
+}
+
+
+.lightbox__caption a:hover {
+    color: var(--edunova-narancasta);
+
+    text-decoration: underline;
+}
+
+
+/* ---------- Strelice ---------- */
+
+.lightbox__arrow {
+    background: rgba(255, 255, 255, 0.12);
+
+    color: var(--bijela);
+
+    border: 2px solid rgba(255, 255, 255, 0.35);
+
+    border-radius: 50%;
+
+    width: 3.5rem;
+    height: 3.5rem;
+
+    font-size: 1.6rem;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    flex-shrink: 0;
+
+    transition:
+        background 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.lightbox__arrow:hover {
+    background: var(--edunova-narancasta);
+
+    border-color: var(--edunova-narancasta);
+
+    transform: scale(1.1);
+}
+
+
+/* ---------- Zatvaranje ---------- */
+
+.lightbox__close {
+    position: absolute;
+
+    top: 1.2rem;
+    right: 1.5rem;
+
+    background: transparent;
+
+    color: var(--bijela);
+
+    border: none;
+
+    font-size: 3rem;
+
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        color 0.25s ease,
+        transform 0.25s ease;
+}
+
+
+.lightbox__close:hover {
+    color: var(--edunova-narancasta);
+
+    transform: scale(1.15);
+}
+
+
+/* ---------- Footer ---------- */
+
+.footer {
+    background: var(--edunova-tamna);
+
+    color: var(--bijela);
+
+    text-align: center;
+
+    padding: 1.2rem 0;
+
+    margin-top: 2rem;
+
+    font-size: 0.9rem;
+}
+
+
+/* ---------- Responzivnost ---------- */
+
+@media (max-width: 1000px) {
+
+    .cards {
+        grid-template-columns: repeat(3, 1fr);
+    }
+
+}
+
+
+@media (max-width: 720px) {
+
+    .cards {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+}
+
+
+@media (max-width: 460px) {
+
+    .cards {
+        grid-template-columns: 1fr;
+    }
+
+
+    .header__logo {
+        font-size: 2.2rem;
+    }
+
+
+    .lightbox {
+        gap: 0.3rem;
+    }
+
+
+    .lightbox__arrow {
+        width: 2.8rem;
+        height: 2.8rem;
+
+        font-size: 1.2rem;
+    }
+
+}
