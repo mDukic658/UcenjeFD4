@@ -1,0 +1,1 @@
+U direktoriju 2_JS\vjezba17\potpisUgovora imaš aplikaciju koja potpisuje ugovor. To je sve OK i to ne diraj. Napravi s desne stane listu slika potpisa i dodaj gumb ispod potpisa za spremanje slike potpisa. Kada spremim potpis on se pojavjluje u listi sdesne strane te u toj liti potpis mogu obrisati. Potpise spremi u localstorage.

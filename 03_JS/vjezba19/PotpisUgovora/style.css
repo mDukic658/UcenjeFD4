@@ -1,0 +1,225 @@
+:root {
+    --primary-color: #2c3e50;
+}
+
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    line-height: 1.6;
+    color: var(--primary-color);
+    padding: 40px;
+    background: #f4f4f4;
+}
+
+.main-wrapper {
+    display: flex;
+    gap: 30px;
+    max-width: 1400px;
+    margin: auto;
+}
+
+.container {
+    flex: 1;
+    background: white;
+    padding: 50px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+}
+
+.contract-text {
+    margin-bottom: 40px;
+    text-align: justify;
+}
+
+.signature-section {
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-end;
+}
+
+.canvas-container {
+    border: 2px dashed #999;
+    background: #fafafa;
+    position: relative;
+}
+
+canvas {
+    cursor: crosshair;
+}
+
+.controls {
+    margin-top: 20px;
+    text-align: right;
+}
+
+button {
+    padding: 10px 25px;
+    font-size: 16px;
+    cursor: pointer;
+    border: none;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+#clear-btn {
+    background: #e74c3c;
+    color: white;
+    margin-right: 10px;
+}
+
+#save-btn {
+    background: #3498db;
+    color: white;
+    margin-right: 10px;
+}
+
+#print-btn {
+    background: #27ae60;
+    color: white;
+    display: none;
+}
+
+/* Sakriven dok se ne ispuni uvjet */
+
+/* Styles for signatures list */
+.signatures-list {
+    width: 350px;
+    background: white;
+    padding: 30px;
+    border: 1px solid #ddd;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+    max-height: 90vh;
+    overflow-y: auto;
+}
+
+.signatures-list h2 {
+    text-align: center;
+    border-bottom: 2px solid var(--primary-color);
+    padding-bottom: 10px;
+    margin-bottom: 20px;
+    font-size: 20px;
+}
+
+#saved-signatures {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.signature-item {
+    border: 2px solid #ddd;
+    padding: 10px;
+    border-radius: 5px;
+    background: #fafafa;
+    position: relative;
+}
+
+.signature-item img {
+    width: 100%;
+    height: auto;
+    display: block;
+    border: 1px solid #eee;
+    background: white;
+}
+
+.signature-item .signature-date {
+    font-size: 11px;
+    color: #7f8c8d;
+    margin-top: 5px;
+    text-align: center;
+}
+
+.signature-date{
+    font-size: 2rem !important;
+}
+
+.signature-item .delete-btn {
+    position: absolute;
+    top: 5px;
+    right: 5px;
+    background: #e74c3c;
+    color: white;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+    font-size: 12px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.signature-item .delete-btn:hover {
+    background: #c0392b;
+}
+
+.no-signatures {
+    text-align: center;
+    color: #7f8c8d;
+    font-style: italic;
+    padding: 20px;
+}
+
+/* CSS za printanje - sakriva gumbe i pozadinu ekrana */
+@media print {
+    body {
+        background: white;
+        padding: 0;
+    }
+
+    .main-wrapper {
+        display: block;
+    }
+
+    .container {
+        border: none;
+        box-shadow: none;
+        width: 100%;
+        margin: 0;
+        padding: 0;
+    }
+
+    .signatures-list {
+        display: none !important;
+    }
+
+    .controls,
+    #clear-btn {
+        display: none !important;
+    }
+
+    .canvas-container {
+        border: 1px solid #eee;
+    }
+
+    #print-btn {
+        display: none !important;
+    }
+
+    .canvas-container {
+        border: none !important;
+        /* Ovo miče isprekidanu liniju */
+        background: transparent;
+    }
+
+    #status {
+        display: none;
+    }
+}
+
+/* Responsive design */
+@media (max-width: 1024px) {
+    .main-wrapper {
+        flex-direction: column;
+    }
+
+    .signatures-list {
+        width: 100%;
+        max-height: 500px;
+    }
+}
