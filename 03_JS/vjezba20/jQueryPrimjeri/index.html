@@ -1,0 +1,695 @@
+<!DOCTYPE html>
+<html lang="hr">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>jQuery 4.0 - 50 Mogućnosti</title>
+    <link rel="stylesheet" href="css/style.css">
+    <script src="js/jquery-4.0.0.min.js"></script>
+</head>
+
+<body>
+    <div class="container">
+        <h1>jQuery 4.0 - 50 Mogućnosti</h1>
+        <p class="subtitle">Repozitorij primjera za polaznike smjera Frontend Developer. Naučite koristiti
+            selektore, filtere, atribute, efekte, manipulaciju DOM-om te API.</p>
+        <div class="section">
+            <h2>Dio 1: Osnovni Selektori</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">1. $('p')</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Selektor elementa</div>
+                    <div class="demo-area" id="demo-1">
+                        <p>Odlomak 1</p>
+                        <p>Odlomak 2</p>
+                        <div>Nije odlomak</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-1">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-1 p').css('color', 'red');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">2. $('#id')</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">ID selektor</div>
+                    <div class="demo-area" id="demo-2">
+                        <span id='moj-span'>Span s ID-em</span><br><span>Običan span</span>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-2">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-2 #moj-span').css('font-weight', 'bold');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">3. $('.class')</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Class selektor</div>
+                    <div class="demo-area" id="demo-3">
+                        <div class='test-klasa'>Element s klasom</div>
+                        <div>Bez klase</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-3">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-3 .test-klasa').css('background-color', 'yellow');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">4. $('*')</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Univerzalni selektor</div>
+                    <div class="demo-area" id="demo-4">
+                        <span>Span</span> <i>Italic</i> <b>Bold</b>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-4">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-4 *').css('border', '1px solid black');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">5. $('p, span')</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Višestruki selektor</div>
+                    <div class="demo-area" id="demo-5">
+                        <p>Tekst</p><span>Još teksta</span><i>Zanemareno</i>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-5">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-5 p, #demo-5 span').css('color', 'blue');</div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Dio 2: Hijerarhijski Selektori</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">6. $('parent descendant')</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Potomak (Descendant)</div>
+                    <div class="demo-area" id="demo-6">
+                        <ul>
+                            <li>Stavka 1</li>
+                            <li>Stavka 2</li>
+                        </ul>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-6">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-6 ul li').css('color', 'green');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">7. $('parent > child')</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Dijete (Child)</div>
+                    <div class="demo-area" id="demo-7">
+                        <div class='roditelj'>
+                            <p>Dijete</p>
+                            <div>
+                                <p>Unuk</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-7">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-7 .roditelj > p').css('border', '2px solid red');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">8. $('prev + next')</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Susjedni element (Adjacent)</div>
+                    <div class="demo-area" id="demo-8">
+                        <h2>Naslov</h2>
+                        <p>Prvi odlomak</p>
+                        <p>Drugi odlomak</p>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-8">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-8 h2 + p').css('text-decoration', 'underline');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">9. $('prev ~ siblings')</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Opći susjed (General Sibling)
+                    </div>
+                    <div class="demo-area" id="demo-9">
+                        <h2>Naslov</h2>
+                        <p>P1</p><span>S1</span>
+                        <p>P2</p>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-9">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-9 h2 ~ p').css('font-style', 'italic');</div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Dio 3: Osnovni Filteri</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">10. :first</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Prvi element</div>
+                    <div class="demo-area" id="demo-10">
+                        <ul>
+                            <li>Prvi</li>
+                            <li>Drugi</li>
+                            <li>Treći</li>
+                        </ul>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-10">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-10 li:first').css('color', 'red');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">11. :last</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Zadnji element</div>
+                    <div class="demo-area" id="demo-11">
+                        <ul>
+                            <li>Prvi</li>
+                            <li>Drugi</li>
+                            <li>Treći</li>
+                        </ul>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-11">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-11 li:last').css('color', 'blue');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">12. :even</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Parni elementi (indeks kreće od 0)
+                    </div>
+                    <div class="demo-area" id="demo-12">
+                        <ul>
+                            <li>0 (Parni)</li>
+                            <li>1 (Neparni)</li>
+                            <li>2 (Parni)</li>
+                        </ul>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-12">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-12 li:even').css('background', '#ddd');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">13. :odd</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Neparni elementi</div>
+                    <div class="demo-area" id="demo-13">
+                        <ul>
+                            <li>0</li>
+                            <li>1 (Neparni)</li>
+                            <li>2</li>
+                            <li>3 (Neparni)</li>
+                        </ul>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-13">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-13 li:odd').css('background', '#bbb');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">14. :eq(index)</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Element na točnom indeksu</div>
+                    <div class="demo-area" id="demo-14">
+                        <ul>
+                            <li>Idx 0</li>
+                            <li>Idx 1</li>
+                            <li>Idx 2</li>
+                        </ul>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-14">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-14 li:eq(1)').css('font-size', '1.2em');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">15. :gt(index)</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Elementi s indeksom većim od
+                        (Greater than)</div>
+                    <div class="demo-area" id="demo-15">
+                        <ul>
+                            <li>Idx 0</li>
+                            <li>Idx 1</li>
+                            <li>Idx 2</li>
+                        </ul>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-15">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-15 li:gt(0)').css('opacity', '0.5');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">16. :lt(index)</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Elementi s indeksom manjim od
+                        (Less than)</div>
+                    <div class="demo-area" id="demo-16">
+                        <ul>
+                            <li>Idx 0</li>
+                            <li>Idx 1</li>
+                            <li>Idx 2</li>
+                        </ul>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-16">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-16 li:lt(2)').css('font-weight', 'bold');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">17. :header</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Svi H1-H6 naslovi</div>
+                    <div class="demo-area" id="demo-17">
+                        <h3>Naslov 3</h3>
+                        <p>Tekst</p>
+                        <h4>Naslov 4</h4>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-17">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-17 :header').css('color', 'purple');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">18. :not(selector)</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Isključivanje</div>
+                    <div class="demo-area" id="demo-18">
+                        <ul>
+                            <li class='skip'>Preskoči</li>
+                            <li>Zadrži</li>
+                        </ul>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-18">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-18 li:not(.skip)').css('color', 'green');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">19. :contains('text')</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Elementi koji sadrže tekst</div>
+                    <div class="demo-area" id="demo-19">
+                        <p>Tajna poruka</p>
+                        <p>Obična poruka</p>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-19">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-19 p:contains(\'Tajna\')').css('background', 'yellow');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">20. :empty</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Prazni elementi</div>
+                    <div class="demo-area" id="demo-20">
+                        <div style='min-height:20px; border:1px solid #ccc'></div>
+                        <div>Ima tekst</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-20">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-20 div:empty').css('background', 'red');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">21. :has(selector)</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Element koji sadrži odabrani
+                        element</div>
+                    <div class="demo-area" id="demo-21">
+                        <div>
+                            <p>Sadrži paragraf</p>
+                        </div>
+                        <div>Samo tekst</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-21">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-21 div:has(p)').css('border', '2px solid blue');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">22. :visible / :hidden</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Vidljivost</div>
+                    <div class="demo-area" id="demo-22">
+                        <span>Vidljiv</span> <span style='display:none'>Skriven</span>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-22">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-22 span:hidden').show().css('color', 'red');</div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Dio 4: Atributni Selektori</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">23. [attribute]</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Ima atribut</div>
+                    <div class="demo-area" id="demo-23">
+                        <a href='#'>Link</a> <a>Bez href</a>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-23">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-23 a[href]').css('color', 'green');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">24. [attr='value']</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Točno jednako</div>
+                    <div class="demo-area" id="demo-24">
+                        <input type='text' value='Tekst'><br><input type='checkbox'>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-24">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-24 input[type=\'checkbox\']').prop('checked', true);</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">25. [attr!='value']</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Nije jednako</div>
+                    <div class="demo-area" id="demo-25">
+                        <input type='text' value='1'><br><input type='password' value='2'>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-25">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-25 input[type!=\'password\']').css('border', '2px solid red');
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">26. [attr^='value']</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Počinje s</div>
+                    <div class="demo-area" id="demo-26">
+                        <a href='https://google.com'>HTTPS</a> <a href='http://test.com'>HTTP</a>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-26">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-26 [href^=\'https\']').css('font-weight', 'bold');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">27. [attr$='value']</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Završava na</div>
+                    <div class="demo-area" id="demo-27">
+                        <a href='doc.pdf'>PDF Dokument</a> <a href='slika.jpg'>Slika</a>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-27">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-27 [href$=\'.pdf\']').css('color', 'red');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">28. [attr*='value']</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Sadrži</div>
+                    <div class="demo-area" id="demo-28">
+                        <a href='/moj-link/test'>Moj Link</a>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-28">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#demo-28 [href*=\'link\']').css('text-decoration',
+                        'none').css('background', 'yellow');</div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Dio 5: Efekti</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">29. .hide()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Skriva element</div>
+                    <div class="demo-area" id="demo-29">
+                        <div id='box-29' class='box'></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-29">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#box-29').hide();</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">30. .show()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Prikazuje element</div>
+                    <div class="demo-area" id="demo-30">
+                        <div id='box-30' class='box' style='display:none'></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-30">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#box-30').show();</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">31. .toggle()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Prebacuje vidljivost</div>
+                    <div class="demo-area" id="demo-31">
+                        <div id='box-31' class='box'></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-31">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#box-31').toggle();</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">32. .fadeIn()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Blijedi prema vidljivom</div>
+                    <div class="demo-area" id="demo-32">
+                        <div id='box-32' class='box' style='display:none'></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-32">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#box-32').fadeIn(1000);</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">33. .fadeOut()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Blijedi prema nevidljivom</div>
+                    <div class="demo-area" id="demo-33">
+                        <div id='box-33' class='box'></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-33">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#box-33').fadeOut(1000);</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">34. .fadeToggle()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Prebacuje blijedilo</div>
+                    <div class="demo-area" id="demo-34">
+                        <div id='box-34' class='box'></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-34">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#box-34').fadeToggle(500);</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">35. .fadeTo()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Blijedi do određene prozirnosti
+                    </div>
+                    <div class="demo-area" id="demo-35">
+                        <div id='box-35' class='box'></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-35">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#box-35').fadeTo(500, 0.4);</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">36. .slideUp()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Zatvara (klizi gore)</div>
+                    <div class="demo-area" id="demo-36">
+                        <div id='box-36' class='box'></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-36">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#box-36').slideUp();</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">37. .slideDown()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Otvara (klizi dolje)</div>
+                    <div class="demo-area" id="demo-37">
+                        <div id='box-37' class='box' style='display:none'></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-37">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#box-37').slideDown();</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">38. .slideToggle()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Prebacuje klizanje</div>
+                    <div class="demo-area" id="demo-38">
+                        <div id='box-38' class='box'></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-38">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#box-38').slideToggle();</div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Dio 6: DOM Manipulacija</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">39. .html()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Mijenja HTML sadržaj</div>
+                    <div class="demo-area" id="demo-39">
+                        <div id='dom-39'>Stari <span>Tekst</span></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-39">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#dom-39').html('<b>Novi HTML! (Bold)</b>');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">40. .text()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Mijenja samo tekstualni sadržaj
+                    </div>
+                    <div class="demo-area" id="demo-40">
+                        <div id='dom-40'>Stari <span>Tekst</span></div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-40">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#dom-40').text('<b>Ovo je escaped tekst</b>');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">41. .val()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Mijenja vrijednost unosnog polja
+                    </div>
+                    <div class="demo-area" id="demo-41">
+                        <input type='text' id='input-41' value='Stara vrijednost'>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-41">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#input-41').val('jQuery 4.0 Vrijednost');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">42. .attr()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Postavlja/Čita atribut</div>
+                    <div class="demo-area" id="demo-42">
+                        <img id='img-42' src='#' alt='Prazna slika' width='50' height='50' style='background:#ccc'>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-42">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#img-42').attr('src',
+                        'https://via.placeholder.com/50/0000FF/808080?text=JS');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">43. .removeAttr()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Uklanja atribut</div>
+                    <div class="demo-area" id="demo-43">
+                        <input id='in-43' type='text' disabled value='Zabranjeno unositi'>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-43">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#in-43').removeAttr('disabled').val('Sada je omogućeno!');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">44. .addClass() / .removeClass()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Manipulacija klasama</div>
+                    <div class="demo-area" id="demo-44">
+                        <div id='dom-44'>Običan tekst</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-44">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#dom-44').addClass('highlight');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">45. .toggleClass()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Prebacuje klasu kod svakog poziva
+                    </div>
+                    <div class="demo-area" id="demo-45">
+                        <div id='dom-45'>Klikni više puta na gumb ispod</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-45">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#dom-45').toggleClass('highlight');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">46. .css()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Mijenja inline CSS stilove</div>
+                    <div class="demo-area" id="demo-46">
+                        <div id='dom-46'>CSS Test</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-46">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#dom-46').css({'color': 'white', 'background-color': 'black',
+                        'padding': '5px'});</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">47. .append() / .prepend()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Dodavanje unutar elementa</div>
+                    <div class="demo-area" id="demo-47">
+                        <ul id='dom-47'>
+                            <li>Sredina</li>
+                        </ul>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-47">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#dom-47').prepend('<li>Prvi (prepend)</li>').append('<li>Zadnji
+                            (append)</li>');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">48. .before() / .after()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Dodavanje van elementa</div>
+                    <div class="demo-area" id="demo-48">
+                        <div id='dom-48' class='highlight'>Ciljani element</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-48">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">
+                        $('#dom-48').before('<span>Prije!</span><br>').after('<br><span>Poslije!</span>');</div>
+                </div>
+                <div class="card">
+                    <div class="card-header">49. .remove() / .empty()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Brisanje i pražnjenje</div>
+                    <div class="demo-area" id="demo-49">
+                        <div id='dom-49'>
+                            <p class='obrisi'>Za brisanje (remove)</p>
+                            <p>Ostaje, ali će se isprazniti (empty)</p>
+                        </div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-49">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$('#dom-49 .obrisi').remove(); setTimeout(() => $('#dom-49').empty(),
+                        1500);</div>
+                </div>
+            </div>
+        </div>
+        <div class="section">
+            <h2>Dio 7: AJAX API i Događaji</h2>
+            <div class="grid">
+                <div class="card">
+                    <div class="card-header">50. $.ajax() / $.get()</div>
+                    <div style="font-size:0.9rem; color:#64748b; margin-bottom:10px;">Dohvaćanje podataka s vanjskog
+                        API-ja (PokeAPI)</div>
+                    <div class="demo-area" id="demo-50">
+                        <div id='api-result-50' class='api-result'>Čekanje na poziv... Pritisnite Pokreni Kod</div>
+                    </div>
+                    <div class="actions">
+                        <button class="btn" id="btn-50">Pokreni Kod</button>
+                    </div>
+                    <div class="code-preview">$.ajax({ url: 'https://pokeapi.co/api/v2/pokemon/pikachu', method: 'GET',
+                        success: function(data) { $('#api-result-50').html('Ime: ' + data.name + '<br>Težina: ' +
+                        data.weight + '<br>Visina: ' + data.height + '<br><img
+                            src="' + data.sprites.front_default + '">'); }, error: function() {
+                        $('#api-result-50').html('Greška pri dohvaćanju API-ja.'); } });</div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Povezivanje JS datoteka -->
+    <script src="js/01_osnovni_selektori.js"></script>
+    <script src="js/02_hijerarhijski_selektori.js"></script>
+    <script src="js/03_filteri.js"></script>
+    <script src="js/04_atributi.js"></script>
+    <script src="js/05_efekti.js"></script>
+    <script src="js/06_dom.js"></script>
+    <script src="js/07_api_dogadaji.js"></script>
+</body>
+
+</html>
