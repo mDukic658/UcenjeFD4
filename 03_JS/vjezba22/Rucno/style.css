@@ -1,0 +1,111 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 35px;
+
+    background-color: #f3eadc;
+
+    font-family: Arial, sans-serif;
+    color: #493b32;
+}
+
+/* Naslov */
+
+h1 {
+    margin: 0;
+    padding: 20px 40px;
+
+    background-color: #d99b75;
+    color: #fffaf3;
+
+    font-size: 38px;
+    font-weight: 500;
+    letter-spacing: 1px;
+
+    border-radius: 30px 8px 30px 8px;
+
+    box-shadow: 0 8px 20px rgba(73, 59, 50, 0.15);
+}
+
+/* Brojač */
+
+div[x-data] {
+    align-items: center;
+    gap: 25px;
+
+    padding: 30px 35px;
+
+    background-color: #fffaf3;
+
+    border: 2px solid #d8c5ad;
+    border-radius: 12px 35px 12px 35px;
+
+    box-shadow: 0 10px 25px rgba(73, 59, 50, 0.12);
+}
+
+/* Broj */
+
+span {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 75px;
+    height: 75px;
+
+    background-color: #a5a58d;
+    color: #fffaf3;
+
+    border-radius: 50%;
+    margin-top: 1rem;
+    margin-left: 5.2rem;
+
+    font-size: 30px;
+    font-weight: bold;
+
+    box-shadow: 0 5px 12px rgba(73, 59, 50, 0.15);
+}
+
+/* Gumbi */
+
+button {
+    padding: 13px 22px;
+
+    border: none;
+    border-radius: 20px 6px 20px 6px;
+
+    background-color: #c97c5d;
+    color: #fffaf3;
+
+    font-size: 16px;
+    font-weight: 600;
+
+    cursor: pointer;
+
+    box-shadow: 0 5px 10px rgba(73, 59, 50, 0.15);
+
+    transition: 0.2s;
+}
+
+button:hover {
+    background-color: #ad674d;
+
+    transform: translateY(-2px);
+
+    box-shadow: 0 7px 14px rgba(73, 59, 50, 0.2);
+}
+
+button:active {
+    transform: translateY(1px);
+
+    box-shadow: 0 3px 6px rgba(73, 59, 50, 0.15);
+}
