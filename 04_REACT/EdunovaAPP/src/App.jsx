@@ -1,21 +1,27 @@
 import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
-import { Badge, Container } from 'react-bootstrap'
+import { Container } from 'react-bootstrap'
+import Izbornik from './components/Izbornik'
+import { IME_APLIKACIJE, RouteNames } from './constants'
+import { Route, Routes } from 'react-router-dom'
+import Home from './pages/Home'
+import SmjerPregled from './pages/smjerovi/SmjerPregled'
 
 function App() {
 
   return (
     <>
       <Container>
-        Hello 
+        <Izbornik />
+        <Container className='app'>
+          <Routes>
+            <Route path={RouteNames.HOME} element={<Home />} />
+            <Route path={RouteNames.SMJEROVI} element={<SmjerPregled />} /> 
+          </Routes>
+        </Container>
+        <hr />
+        &copy; {IME_APLIKACIJE}
       </Container>
-      <hr />
-      <div className='podrucje'>
-        Edunova
-      </div>
-
-      <Badge bg='success'>5</Badge>
-
     </>
   )
 }
