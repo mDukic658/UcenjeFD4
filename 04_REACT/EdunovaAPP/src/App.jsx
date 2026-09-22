@@ -16,7 +16,7 @@ function App() {
         <Container className='app'>
           <Routes>
             <Route path={RouteNames.HOME} element={<Home />} />
-            <Route path={RouteNames.SMJEROVI} element={<SmjerPregled />} /> 
+            <Route path={RouteNames.SMJEROVI} element={<SmjerPregled />} />
           </Routes>
         </Container>
         <hr />

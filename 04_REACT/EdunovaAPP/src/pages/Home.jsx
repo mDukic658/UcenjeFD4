@@ -1,13 +1,12 @@
 
 
+
 export default function Home(){
 
 
-
-return(
-    <>
-        Ovdje dođe sadržaj na početnoj stranici
-    </>
-)
-
+    return(
+        <>
+            Ovdje dođe sadržaj na početnoj stranici
+        </>
+    )
 }
