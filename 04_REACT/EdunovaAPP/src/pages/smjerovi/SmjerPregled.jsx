@@ -9,17 +9,19 @@ export default function SmjerPregled() {
 
     const [smjerovi, setSmjerovi] = useState([])
 
-    useEffect(() => {
-        console.log('Došao na pregled smjerova')
-        ucitajSmjerove()
-    }, [])
-
     async function ucitajSmjerove() {
         await SmjerService.get().then((odgovor) => {
             // console.table(odgovor.data)
             setSmjerovi(odgovor.data)
         })
     }
+
+    useEffect(() => {
+        console.log('Došao na pregled smjerova')
+        ucitajSmjerove()
+    }, [])
+
+    
 
     return (
         <>
@@ -35,46 +37,45 @@ export default function SmjerPregled() {
                     </tr>
                 </thead>
                 <tbody>
-
                     {smjerovi && smjerovi.map((smjer) => (
-
                         <tr key={smjer.sifra}>
-                            <td> {smjer.naziv} </td>
-                            <td> {smjer.trajanje} </td>
-                            <td> {smjer.cijena} </td>
-                            <td> {smjer.datumPokretanja} </td>
-                            {/* <td> {smjer.aktivan ? 'DA' : 'NE'} </td> */}
+                            <td>{smjer.naziv}</td>
+                            <td>{smjer.trajanje}</td>
+                            <td>{smjer.cijena}</td>
+                            <td>{smjer.datumPokretanja}</td>
+                            {/* Ovako se može jednostavno */}
+                            {/* <td>{smjer.aktivan ? 'DA' : 'NE'}</td> */}
 
                             <td>
+                                {/* Primjer jedne ikone s različitim svojstvima u odnosu na boolean svojstvo */}
                                 <GrValidate
                                     size={25}
                                     color={smjer.aktivan ? 'green' : 'red'}
                                     title={smjer.aktivan ? 'Aktivan' : 'Neaktivan'}
                                 />
 
+                                {/* Primjer različitih ikona u odnosu na boolean svojstvo */}
                                 {smjer.aktivan ? (
                                     <FcApproval />
                                 ) : (
                                     <FcDisapprove />
                                 )}
 
+
                             </td>
-
                         </tr>
-
                     ))}
                 </tbody>
             </Table>
-
             Ukupno &nbsp;
             <Badge pill bg="success">
-                {smjerovi && smjerovi.length} 
+                {smjerovi && smjerovi.length}
             </Badge>
             &nbsp; smjerova
 
             {/* <pre>
                 {JSON.stringify(smjerovi, null, 2)}
-            </pre> */}
+            </pre>  */}
         </>
     )
 }
