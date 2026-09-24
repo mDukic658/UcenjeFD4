@@ -9,6 +9,7 @@ export default function Izbornik() {
 
     const navigate = useNavigate()
 
+
     return (
         <Navbar expand="lg" className="bg-body-tertiary">
             <Container>
@@ -19,11 +20,11 @@ export default function Izbornik() {
                 <Navbar.Collapse id="basic-navbar-nav">
                     <Nav className="me-auto">
                         <Nav.Link
-                            onClick={() => { navigate(RouteNames.HOME) }}
+                        onClick={()=>{navigate(RouteNames.HOME)}}
                         >Početna</Nav.Link>
                         <NavDropdown title="Programi" id="basic-nav-dropdown">
                             <NavDropdown.Item
-                                onClick={() => navigate(RouteNames.SMJEROVI)}
+                            onClick={()=>navigate(RouteNames.SMJEROVI)}
                             >Smjerovi</NavDropdown.Item>
                         </NavDropdown>
                     </Nav>
