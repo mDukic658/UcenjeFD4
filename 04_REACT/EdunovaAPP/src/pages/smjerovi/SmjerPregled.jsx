@@ -3,6 +3,8 @@ import SmjerService from "../../services/smjerovi/SmjerService"
 import { Badge, Table } from "react-bootstrap"
 import { GrValidate } from "react-icons/gr"
 import { FcApproval, FcDisapprove } from "react-icons/fc"
+import { NumericFormat } from "react-number-format"
+import FormatDatuma from "../../components/FormatDatuma"
 
 
 export default function SmjerPregled() {
@@ -21,7 +23,7 @@ export default function SmjerPregled() {
         ucitajSmjerove()
     }, [])
 
-    
+
 
     return (
         <>
@@ -39,10 +41,25 @@ export default function SmjerPregled() {
                 <tbody>
                     {smjerovi && smjerovi.map((smjer) => (
                         <tr key={smjer.sifra}>
-                            <td>{smjer.naziv}</td>
-                            <td>{smjer.trajanje}</td>
-                            <td>{smjer.cijena}</td>
-                            <td>{smjer.datumPokretanja}</td>
+                            <td className="lead" >{smjer.naziv}</td>
+                            <td className="text-end" >
+                                {smjer.trajanje}
+                            </td>
+                            <td className="desno" >
+                                <NumericFormat
+                                    value={smjer.cijena}
+                                    displayType={'text'}
+                                    decimalSeparator=","
+                                    decimalScale={2}
+                                    fixedDecimalScale
+                                    thousandSeparator='.'
+                                    suffix=" €"
+                                    prefix="="
+                                />
+                            </td>
+                            <td style={{ textAlign: 'center' }} >
+                                <FormatDatuma datum={smjer.datumPokretanja} prikazDatuma="Nije postavljeno" />
+                            </td>
                             {/* Ovako se može jednostavno */}
                             {/* <td>{smjer.aktivan ? 'DA' : 'NE'}</td> */}
 

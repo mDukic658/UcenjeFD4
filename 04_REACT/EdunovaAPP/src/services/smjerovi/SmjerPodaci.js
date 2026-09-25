@@ -34,7 +34,7 @@ export const smjerovi = [
     {
         sifra: 5,
         naziv: 'Grafički dizajn',
-        trajanje: 200,
+        trajanje: 90,
         cijena: 1250.50,
         datumPokretanja: '2026-07-01T18:00:00',
         aktivan: true,
