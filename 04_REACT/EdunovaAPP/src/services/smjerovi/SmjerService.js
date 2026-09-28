@@ -8,7 +8,7 @@ async function get(){
 
 // 2/4 od CRUD: Create
 
-async function dodaj(smjer) {
+async function dodaj(smjer){
     if(smjerovi.length === 0){
         smjer.sifra = 1
     }else{
@@ -16,6 +16,8 @@ async function dodaj(smjer) {
     }
     smjerovi.push(smjer)
 }
+
+
 
 
 export default{

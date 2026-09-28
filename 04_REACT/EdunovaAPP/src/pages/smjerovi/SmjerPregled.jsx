@@ -25,15 +25,13 @@ export default function SmjerPregled() {
         ucitajSmjerove()
     }, [])
 
-
+    
 
     return (
         <>
-
             <Link to={RouteNames.SMJEROVI_DODAJ}>
                 Dodavanje novog smjera
             </Link>
-
             <Table hover striped bordered>
                 <thead>
                     <tr>
@@ -54,18 +52,18 @@ export default function SmjerPregled() {
                                 {smjer.trajanje}
                             </td>
                             <td className="desno">
-                                <NumericFormat
-                                    value={smjer.cijena}
-                                    displayType={'text'}
-                                    decimalSeparator=","
-                                    decimalScale={2}
-                                    fixedDecimalScale
-                                    thousandSeparator='.'
-                                    suffix=" €"
-                                    prefix="="
+                                <NumericFormat 
+                                value={smjer.cijena}
+                                displayType={'text'}
+                                decimalSeparator=","
+                                decimalScale={2}
+                                fixedDecimalScale
+                                thousandSeparator='.'
+                                suffix=" €"
+                                prefix="="
                                 />
                             </td>
-                            <td style={{ textAlign: 'center' }}>
+                            <td style={{textAlign: 'center'}}>
                                 <FormatDatuma datum={smjer.datumPokretanja} />
                             </td>
                             {/* Ovako se može jednostavno */}

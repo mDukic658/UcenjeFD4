@@ -14,8 +14,8 @@ export default function SmjerNovi() {
         })
     }
 
-    function obradiSubmit(e) {   //e je event
-        e.preventDefault()  //nemoj odraditi submit
+    function obradiSubmit(e){ // e je event
+        e.preventDefault() // nemoj odraditi submit
         const podaci = new FormData(e.target)
         dodaj({
             naziv: podaci.get('naziv'),
@@ -26,6 +26,7 @@ export default function SmjerNovi() {
         })
     }
 
+
     return (
         <>
             <h3>
@@ -35,28 +36,31 @@ export default function SmjerNovi() {
             <Form onSubmit={obradiSubmit}>
 
                 <Form.Group controlId="naziv">
-                    <Form.Label> Naziv </Form.Label>
+                    <Form.Label>Naziv</Form.Label>
                     <Form.Control type="text" name="naziv" required />
                 </Form.Group>
 
-                <Form.Group controlId="trajanje" >
-                    <Form.Label> Trajanje</Form.Label>
+                <Form.Group controlId="trajanje">
+                    <Form.Label>Trajanje</Form.Label>
                     <Form.Control type="number" name="trajanje" step={1} />
                 </Form.Group>
 
                 <Form.Group controlId="cijena">
-                    <Form.Label> Cijena </Form.Label>
+                    <Form.Label>Cijena</Form.Label>
                     <Form.Control type="number" name="cijena" step={0.01} />
                 </Form.Group>
 
                 <Form.Group controlId="datumPokretanja">
-                    <Form.Label> Datum pokretanja </Form.Label>
+                    <Form.Label>Datum pokretanja</Form.Label>
                     <Form.Control type="date" name="datumPokretanja" />
                 </Form.Group>
 
                 <Form.Group controlId="aktivan">
                     <Form.Check label="Aktivan" name="aktivan" />
                 </Form.Group>
+
+
+
 
                 <hr />
 
@@ -73,6 +77,8 @@ export default function SmjerNovi() {
                     </Col>
                 </Row>
             </Form>
+
+
         </>
     )
 }
