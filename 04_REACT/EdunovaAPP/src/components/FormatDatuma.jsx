@@ -1,6 +1,4 @@
-
 export default function FormatDatuma({datum, prikazDatuma = '-'}){
-
     if(!datum){
         return prikazDatuma
     }
@@ -16,4 +14,5 @@ export default function FormatDatuma({datum, prikazDatuma = '-'}){
         month: '2-digit',
         year: 'numeric'
     }).format(d)
+
 }
