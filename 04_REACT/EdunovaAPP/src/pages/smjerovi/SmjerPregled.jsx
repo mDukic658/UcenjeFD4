@@ -29,7 +29,9 @@ export default function SmjerPregled() {
 
     return (
         <>
-            <Link to={RouteNames.SMJEROVI_DODAJ}>
+            <Link to={RouteNames.SMJEROVI_DODAJ} 
+            className="btn btn-success w-100 my-3"
+            >
                 Dodavanje novog smjera
             </Link>
             <Table hover striped bordered>
