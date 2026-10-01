@@ -27,6 +27,9 @@ export default function Izbornik() {
                             onClick={()=>navigate(RouteNames.SMJEROVI)}
                             >Smjerovi</NavDropdown.Item>
                         </NavDropdown>
+                        <Nav.Link
+                        onClick={()=>{navigate(RouteNames.RASPORED)}}
+                        >Raspored</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>
