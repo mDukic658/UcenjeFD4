@@ -20,6 +20,7 @@ function App() {
           <Routes>
             <Route path={RouteNames.HOME} element={<Home />} />
             <Route path={RouteNames.RASPORED} element={<Raspored />} />
+
             <Route path={RouteNames.SMJEROVI} element={<SmjerPregled />} />
             <Route path={RouteNames.SMJEROVI_DODAJ} element={<SmjerNovi />} />
             <Route path={RouteNames.SMJEROVI_PROMJENA} element={<SmjerPromjena />} />

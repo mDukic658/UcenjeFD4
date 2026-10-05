@@ -12,6 +12,7 @@ import { RouteNames } from "../../constants"
 export default function SmjerPregled() {
 
     const [smjerovi, setSmjerovi] = useState([])
+
     const navigate = useNavigate()
 
     async function ucitajSmjerove() {
@@ -22,16 +23,16 @@ export default function SmjerPregled() {
     }
 
     useEffect(() => {
-        console.log('Došao na pregled smjerova')
+        //console.log('Došao na pregled smjerova')
         ucitajSmjerove()
     }, [])
 
-
+    
 
     return (
         <>
             <Link to={RouteNames.SMJEROVI_DODAJ}
-                className="btn btn-success w-100 my-3">
+            className="btn btn-success w-100 my-3">
                 Dodavanje novog smjera
             </Link>
             <Table hover striped bordered>
@@ -55,18 +56,18 @@ export default function SmjerPregled() {
                                 {smjer.trajanje}
                             </td>
                             <td className="desno">
-                                <NumericFormat
-                                    value={smjer.cijena}
-                                    displayType={'text'}
-                                    decimalSeparator=","
-                                    decimalScale={2}
-                                    fixedDecimalScale
-                                    thousandSeparator='.'
-                                    suffix=" €"
-                                    prefix="="
+                                <NumericFormat 
+                                value={smjer.cijena}
+                                displayType={'text'}
+                                decimalSeparator=","
+                                decimalScale={2}
+                                fixedDecimalScale
+                                thousandSeparator='.'
+                                suffix=" €"
+                                prefix="="
                                 />
                             </td>
-                            <td style={{ textAlign: 'center' }}>
+                            <td style={{textAlign: 'center'}}>
                                 <FormatDatuma datum={smjer.datumPokretanja} />
                             </td>
                             {/* Ovako se može jednostavno */}
@@ -90,8 +91,7 @@ export default function SmjerPregled() {
 
                             </td>
                             <td>
-                                <Button
-                                    onClick={() => { navigate(`/smjerovi/${smjer.sifra}`) }}>
+                                <Button onClick={()=>{navigate(`/smjerovi/${smjer.sifra}`)}}>
                                     Promjena
                                 </Button>
                             </td>

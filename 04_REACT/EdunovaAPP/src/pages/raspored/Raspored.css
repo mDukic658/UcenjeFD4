@@ -3,17 +3,11 @@
      --card-bg: #ffffff;
      --text-color: #333333;
      --text-muted: #777777;
-     --border-color: #e0e0e0;
+     --border-color: #f4f6f9;
      --class-bg: #e8f5e9;
      --class-color: #2e7d32;
      --class-border: #c8e6c9;
      --weekend-bg: #fafafa;
- }
-
-
- .container {
-     width: 100%;
-     max-width: 900px;
  }
 
  h1 {
