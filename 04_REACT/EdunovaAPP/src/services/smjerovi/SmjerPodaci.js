@@ -46,13 +46,5 @@ export const smjerovi = [
         cijena: 1850.00,
         datumPokretanja: '2025-10-15T19:30:00',
         aktivan: false,
-    },
-    {
-        sifra: 7,
-        naziv: 'Uvod u umjetnu inteligenciju',
-        trajanje: 120,
-        cijena: 750.00,
-        datumPokretanja: '2026-09-01T17:00:00',
-        aktivan: true,
     }
 ]

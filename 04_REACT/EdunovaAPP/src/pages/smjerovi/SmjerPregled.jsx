@@ -27,6 +27,16 @@ export default function SmjerPregled() {
         ucitajSmjerove()
     }, [])
 
+
+    async function obrisi(sifra){
+        if(!confirm('Sigurno obrisati?')){
+            return
+        }
+
+        await SmjerService.obrisi(sifra)
+        ucitajSmjerove()
+    }
+
     
 
     return (
@@ -64,7 +74,6 @@ export default function SmjerPregled() {
                                 fixedDecimalScale
                                 thousandSeparator='.'
                                 suffix=" €"
-                                prefix="="
                                 />
                             </td>
                             <td style={{textAlign: 'center'}}>
@@ -73,7 +82,7 @@ export default function SmjerPregled() {
                             {/* Ovako se može jednostavno */}
                             {/* <td>{smjer.aktivan ? 'DA' : 'NE'}</td> */}
 
-                            <td>
+                            <td style={{textAlign: 'center'}}>
                                 {/* Primjer jedne ikone s različitim svojstvima u odnosu na boolean svojstvo */}
                                 <GrValidate
                                     size={25}
@@ -82,17 +91,22 @@ export default function SmjerPregled() {
                                 />
 
                                 {/* Primjer različitih ikona u odnosu na boolean svojstvo */}
-                                {smjer.aktivan ? (
+
+                                { /*smjer.aktivan ? (
                                     <FcApproval />
                                 ) : (
                                     <FcDisapprove />
-                                )}
+                                )*/}
 
 
                             </td>
                             <td>
                                 <Button onClick={()=>{navigate(`/smjerovi/${smjer.sifra}`)}}>
                                     Promjena
+                                </Button>
+                                &nbsp;&nbsp;
+                                <Button variant="danger" onClick={()=>obrisi(smjer.sifra)}>
+                                    Obriši
                                 </Button>
                             </td>
                         </tr>

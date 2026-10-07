@@ -6,6 +6,9 @@ npm i react-router-dom
 npm i react-icons
 npm i react-number-format
 
+// animacije lottie
+npm install @lottiefiles/dotlottie-react
+
 
 
 
