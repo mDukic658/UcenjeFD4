@@ -1,49 +1,37 @@
-import { smjerovi } from "./SmjerPodaci";
+import { DATA_SOURCE } from "../../constants"
+import SmjerServiceLocalStorage from "./SmjerServiceLocalStorage"
+import SmjerServiceMemorija from "./SmjerServiceMemorija"
 
-// 1/4 od CRUD: Read
 
-async function get(){
-    return {data: [...smjerovi]} // [...] stvara novi niz s istim podacima
+let Servis = null
+
+switch(DATA_SOURCE){
+    case 'memorija':
+        Servis = SmjerServiceMemorija
+        break
+    case 'localStorage':
+        Servis = SmjerServiceLocalStorage
+        break
+    default:
+        Servis = null
 }
 
-async function getBySifra(sifra){
-    return {data: smjerovi.find(s => s.sifra === parseInt(sifra))}
+const PrazanServis = {
+    get: async () => ({data: []}),
+    getBySifra: async (sifra) => ({data: {}}),
+    dodaj: async (smjer) => {console.error('Servis nije implementiran')},
+    promijeni: async (sifra, smjer) => {console.error('Servis nije implementiran')},
+    obrisi: async (sifra) => {console.error('Servis nije implementiran')}
 }
 
-// 2/4 od CRUD: Create
-
-async function dodaj(smjer){
-    if(smjerovi.length === 0){
-        smjer.sifra = 1
-    }else{
-        smjer.sifra = smjerovi[smjerovi.length - 1].sifra + 1
-    }
-    smjerovi.push(smjer)
-}
-
-// 3/4 od CRUD: Update
-
-async function promijeni(sifra, smjer){
-    const index = nadiIndex(sifra)
-    smjerovi[index] = {...smjerovi[index], ...smjer}
-}
-
-function nadiIndex(sifra){
-    return smjerovi.findIndex(s => s.sifra === parseInt(sifra))
-} 
-
-// 4/4 od CRUD: Delete
-async function obrisi(sifra){
-    const index = nadiIndex(sifra)
-    smjerovi.splice(index,1)
-}
+const AktivniServis = Servis || PrazanServis
 
 
 
 export default{
-    get,
-    getBySifra,
-    dodaj,
-    promijeni,
-    obrisi
+    get: () => AktivniServis.get(),
+    getBySifra: (sifra) => AktivniServis.getBySifra(sifra),
+    dodaj: (smjer) => AktivniServis.dodaj(smjer),
+    promijeni: (sifra,smjer) => AktivniServis.promijeni(sifra,smjer),
+    obrisi: (sifra) => AktivniServis.obrisi(sifra)
 }
