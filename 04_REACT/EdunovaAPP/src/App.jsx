@@ -2,13 +2,14 @@ import 'bootstrap/dist/css/bootstrap.min.css'
 import './App.css'
 import { Container } from 'react-bootstrap'
 import Izbornik from './components/Izbornik'
-import { DATA_SOURCE, IME_APLIKACIJE, RouteNames } from './constants'
+import { IME_APLIKACIJE, RouteNames } from './constants'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
 import SmjerPregled from './pages/smjerovi/SmjerPregled'
 import SmjerNovi from './pages/smjerovi/SmjerNovi'
 import Raspored from './pages/raspored/Raspored'
 import SmjerPromjena from './pages/smjerovi/SmjerPromjena'
+import PolaznikPregled from './pages/polaznici/PolazniciPregled'
 
 function App() {
 
@@ -24,10 +25,12 @@ function App() {
             <Route path={RouteNames.SMJEROVI} element={<SmjerPregled />} />
             <Route path={RouteNames.SMJEROVI_DODAJ} element={<SmjerNovi />} />
             <Route path={RouteNames.SMJEROVI_PROMJENA} element={<SmjerPromjena />} />
+
+            <Route path={RouteNames.POLAZNICI} element={<PolaznikPregled />} />
           </Routes>
         </Container>
         <hr />
-        &copy; {IME_APLIKACIJE} ({DATA_SOURCE})
+        &copy; {IME_APLIKACIJE}
       </Container>
     </>
   )
