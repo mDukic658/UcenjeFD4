@@ -9,7 +9,9 @@ import SmjerPregled from './pages/smjerovi/SmjerPregled'
 import SmjerNovi from './pages/smjerovi/SmjerNovi'
 import Raspored from './pages/raspored/Raspored'
 import SmjerPromjena from './pages/smjerovi/SmjerPromjena'
-import PolaznikPregled from './pages/polaznici/PolazniciPregled'
+import PolaznikPregled from './pages/polaznici/PolaznikPregled'
+import PolaznikNovi from './pages/polaznici/PolaznikNovi'
+import PolaznikPromjena from './pages/polaznici/PolaznikPromjena'
 
 function App() {
 
@@ -27,6 +29,8 @@ function App() {
             <Route path={RouteNames.SMJEROVI_PROMJENA} element={<SmjerPromjena />} />
 
             <Route path={RouteNames.POLAZNICI} element={<PolaznikPregled />} />
+            <Route path={RouteNames.POLAZNICI_DODAJ} element={<PolaznikNovi />} />
+            <Route path={RouteNames.POLAZNICI_PROMJENA} element={<PolaznikPromjena />} />
           </Routes>
         </Container>
         <hr />

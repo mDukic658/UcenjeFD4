@@ -1,9 +1,6 @@
 import { useEffect, useState } from "react"
 import PolaznikService from "../../services/polaznici/PolaznikService"
 import { Badge, Button, Table } from "react-bootstrap"
-import { GrValidate } from "react-icons/gr"
-import { NumericFormat } from "react-number-format"
-import FormatDatuma from "../../components/FormatDatuma"
 import { Link, useNavigate } from "react-router-dom"
 import { RouteNames } from "../../constants"
 
@@ -16,13 +13,12 @@ export default function PolaznikPregled() {
 
     async function ucitajPolaznike() {
         await PolaznikService.get().then((odgovor) => {
-            console.log(JSON.stringify(odgovor.data))
+            //console.log(JSON.stringify(odgovor.data))
             setPolaznici(odgovor.data)
         })
     }
 
     useEffect(() => {
-        //console.log('Došao na pregled polaznikova')
         ucitajPolaznike()
     }, [])
 
