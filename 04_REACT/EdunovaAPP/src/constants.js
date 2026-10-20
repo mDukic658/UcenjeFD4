@@ -12,7 +12,13 @@ export const RouteNames = {
     POLAZNICI: '/polaznici',
     POLAZNICI_DODAJ: '/polaznici/novi',
     POLAZNICI_PROMJENA: '/polaznici/:sifra',
+
+    GRUPE: '/grupe',
+    GRUPE_DODAJ: '/grupe/novi',
+    GRUPE_PROMJENA: '/grupe/:sifra',
+
+    GENERIRANJE_PODATAKA: '/generiraj-podatke'
 }
 
 // memorija, localStorage, firebase
-export const DATA_SOURCE = 'memorija'
+export const DATA_SOURCE = 'localStorage'

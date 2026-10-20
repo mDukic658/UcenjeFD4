@@ -1,3 +1,12 @@
+/* body, .card{
+  --bs-bg-opacity: 1;
+  background-color: rgba(var(--bs-tertiary-bg-rgb), var(--bs-bg-opacity)) !important; 
+} */
+
+.granica {
+    border: 1px solid rgb(74, 65, 65);
+  }
+
 .app{
   min-height: 500px;
 }
@@ -5,3 +14,8 @@
 .desno{
   text-align: right;
 }
+
+.visinaAkcija{
+  margin-top: 1.7rem;
+}
+
