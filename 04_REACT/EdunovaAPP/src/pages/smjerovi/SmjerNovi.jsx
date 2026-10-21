@@ -17,6 +17,55 @@ export default function SmjerNovi() {
     function obradiSubmit(e) { // e je event
         e.preventDefault() // nemoj odraditi submit
         const podaci = new FormData(e.target)
+
+        if (!podaci.get('naziv') || podaci.get('naziv').trim().length === 0) {
+            alert("Naziv je obavezan i ne smije sadržavati samo razmake!")
+            return 
+        }
+
+    
+        if (podaci.get('naziv').trim().length < 3 || podaci.get('naziv').trim().length > 30) {
+            alert("Naziv smjera mora imati najmanje 3 znaka i najviše 30!")
+            return 
+        }
+
+   
+      
+        if (isNaN(podaci.get('trajanje')) || podaci.get('trajanje') < 1 || podaci.get('trajanje') > 500) {
+            alert("Trajanje mora biti broj između 1 i 500 sati!")
+            return 
+        }
+
+        if (!podaci.get('cijena') || podaci.get('cijena') === "") {
+            alert("Obavezno cijena smjera!")
+            return
+        }
+
+       
+        if (podaci.get('cijena') < 0) {
+            alert("Cijena ne može biti negativan broj!")
+            return 
+        }
+
+        if (podaci.get('cijena') > 10000) {
+            alert("Cijena ne može veća od 10000 €!")
+            return 
+        }
+
+        if (!podaci.get('datumPokretanja') || podaci.get('datumPokretanja') === "") {
+            alert("Morate odabrati datum pokretanja!")
+            return
+        }
+
+        const odabraniDatum = new Date(podaci.get('datumPokretanja'))
+        const danas = new Date()
+        danas.setHours(0, 0, 0, 0) 
+
+        if (odabraniDatum < danas) {
+            alert("Datum pokretanja ne može biti u prošlosti!")
+            return
+        }
+
         dodaj({
             naziv: podaci.get('naziv'),
             trajanje: parseInt(podaci.get('trajanje')),

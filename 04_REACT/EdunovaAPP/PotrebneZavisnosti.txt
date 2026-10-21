@@ -10,7 +10,8 @@ npm i react-number-format
 npm install @lottiefiles/dotlottie-react
 
 
-
+// za generiranje podataka
+npm install @faker-js/faker
 
 
 // Zanimljivije zavisnosti
