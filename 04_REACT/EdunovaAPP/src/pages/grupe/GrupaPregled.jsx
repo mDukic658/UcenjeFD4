@@ -66,7 +66,8 @@ export default function GrupaPregled() {
                     {grupe && grupe.map((grupa) => (
                         <tr key={grupa.sifra}>
                             <td>
-                                {grupa.naziv}
+                                {grupa.naziv} 
+                                <span title="Broj polaznika"> ({grupa.polaznici.length}) </span>
                             </td>
                             <td>
                                 {dohvatiNazivSmjera(grupa.smjer)}

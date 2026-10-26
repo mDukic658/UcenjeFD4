@@ -76,8 +76,9 @@ export default function GeneriranjePodataka() {
             const randomSmjer = smjerovi[faker.number.int({ min: 0, max: smjerovi.length - 1 })];
   
             const grupa = {
-                naziv: randomSmjer.naziv.trim().split(/\s+/).slice(0, 2).map(rijec => rijec[0]).join('').toUpperCase(),   
-                smjer: randomSmjer.sifra
+                naziv: randomSmjer.naziv.trim().split(/\s+/).slice(0, 2).map(rijec => rijec[0]).join('').toUpperCase() + i,   
+                smjer: randomSmjer.sifra,
+                polaznici: []
             };
             
             await GrupaService.dodaj(grupa);
