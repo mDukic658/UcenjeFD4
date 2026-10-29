@@ -53,6 +53,9 @@ export default function Izbornik() {
                         <Nav.Link
                             onClick={() => { navigate(RouteNames.RASPORED) }}
                         >Raspored</Nav.Link>
+                        <Nav.Link
+                        onClick={()=>navigate(RouteNames.APLIKACIJE_POLAZNIKA)}
+                        >Aplikacije polaznika</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>
             </Container>

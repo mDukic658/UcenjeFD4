@@ -16,6 +16,7 @@ import GrupaPregled from './pages/grupe/GrupaPregled'
 import GrupaNovi from './pages/grupe/GrupaNovi'
 import GrupaPromjena from './pages/grupe/Grupapromjena'
 import GeneriranjePodataka from './pages/GeneriranjePodataka'
+import AplikacijePolaznika from './pages/AplikacijePolaznika'
 
 function App() {
 
@@ -41,6 +42,9 @@ function App() {
             <Route path={RouteNames.GRUPE_PROMJENA} element={<GrupaPromjena />} />
 
             <Route path={RouteNames.GENERIRANJE_PODATAKA} element={<GeneriranjePodataka />} />
+
+            <Route path={RouteNames.APLIKACIJE_POLAZNIKA} element={<AplikacijePolaznika />} />
+
           </Routes>
         </Container>
         <hr />

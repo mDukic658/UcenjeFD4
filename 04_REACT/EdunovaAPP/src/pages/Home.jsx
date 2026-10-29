@@ -96,7 +96,9 @@ export default function Home() {
                             <Card.Body className="text-center">
                                 <p className="text-white">Polaznici</p>
                                 <div className="statistikaTekst">
+                                    <LordIcon style={{ width: 80, height: 80 }} src="/lordicon/polaznik.json" trigger="hover" />
                                     {animatedPolaznici}
+                                    &nbsp;<LordIcon  style={{ width: 80, height: 80 }}  src="/lordicon/polaznik.json" trigger="hover" />
                                 </div>
                             </Card.Body>
                         </Card>
