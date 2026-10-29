@@ -39,11 +39,27 @@ async function obrisi(sifra){
 }
 
 
+// Straničenje - dohvati stranicu polaznika
+async function dohvatiStranicu(stranica = 1, velicinaStranice = 8) {
+    const pocetniIndeks = (stranica - 1) * velicinaStranice; // (2-1) * 8, 1 * 8 = 8
+    const zavrsniIndeks = pocetniIndeks + velicinaStranice; // 8+8=16
+    const stranicenjePodaci = polaznici.slice(pocetniIndeks, zavrsniIndeks);
+    const ukupnoStavki = polaznici.length;
+    const ukupnoStranica = Math.ceil(ukupnoStavki / velicinaStranice);
+
+    return {
+        data: stranicenjePodaci,
+        ukupnoStranica: ukupnoStranica,
+        ukupnoStavki: ukupnoStavki
+    };
+}
+
 
 export default{
     get,
     getBySifra,
     dodaj,
     promijeni,
-    obrisi
+    obrisi,
+    dohvatiStranicu
 }

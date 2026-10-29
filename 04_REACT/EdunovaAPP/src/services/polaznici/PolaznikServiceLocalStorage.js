@@ -50,11 +50,28 @@ async function obrisi(sifra){
 }
 
 
+// Straničenje - dohvati stranicu polaznika
+async function dohvatiStranicu(stranica = 1, velicinaStranice = 8) {
+    const polaznici = dohvatiSveIzStorage();
+    const pocetniIndeks = (stranica - 1) * velicinaStranice;
+    const zavrsniIndeks = pocetniIndeks + velicinaStranice;
+    const stranicenjePodaci = polaznici.slice(pocetniIndeks, zavrsniIndeks);
+    const ukupnoStavki = polaznici.length;
+    const ukupnoStranica = Math.ceil(ukupnoStavki / velicinaStranice);
+
+    return {
+        data: stranicenjePodaci,
+        ukupnoStranica: ukupnoStranica,
+        ukupnoStavki: ukupnoStavki
+    };
+}
+
 
 export default{
     get,
     getBySifra,
     dodaj,
     promijeni,
-    obrisi
+    obrisi,
+    dohvatiStranicu
 }

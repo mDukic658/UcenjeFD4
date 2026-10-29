@@ -112,7 +112,7 @@ export default function AplikacijePolaznika() {
             "git": "https://github.com/tonikljenak91-glitch",
             "url": "https://edunova20.origo.hr",
             "aplikacija": "Hempvend manager",
-            "opis": "NAKNADNO"
+            "opis": "Šaljem vam opis aplikacije Aparat. Aplikacija omogućuje evidenciju samoposlužnih aparata prema ID-u, nazivu i lokaciji aparata, te praćenje proizvoda, vrste proizvoda, proizvođača i cijene."
         },
         {
             "ime": "Vedran",
@@ -157,6 +157,7 @@ export default function AplikacijePolaznika() {
     ]
 
 
+
     const polazniciFD4 = [
         {
             "ime": "Marta",
@@ -164,7 +165,7 @@ export default function AplikacijePolaznika() {
             "git": "https://github.com/mDukic658/PlanerPutovanja",
             "url": "https://edunova31.origo.hr",
             "aplikacija": "Planer putovanja",
-            "opis": "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus at sapien et massa vestibulum tempor. Morbi consequat enim nec purus pharetra tincidunt. Pellentesque ullamcorper tortor ac eleifend."
+            "opis": "Planer Putovanja web je aplikacija za personalizirano planiranje putovanja, prilagodbu vlastitim potrebama, praćenje posjećenih država i izradu popisa za pakiranje."
         },
         {
             "ime": "Anamaria",
@@ -236,7 +237,7 @@ export default function AplikacijePolaznika() {
             "git": "https://github.com/bsdmarko-a11y",
             "url": "https://edunova43.origo.hr",
             "aplikacija": "TCCCTrainer",
-            "opis": "NAKNADNO"
+            "opis": "TCCC Trainer je mobilna aplikacija za učenje taktičkog zbrinjavanja ranjenika: MARCH vodič, kvizovi, scenariji iz prakse, mjerač vremena postavljanje Podveske, kartica ranjenika i praćenje napretka."
         },
         {
             "ime": "Mario",
@@ -327,7 +328,6 @@ export default function AplikacijePolaznika() {
             "opis": "NAKNADNO"
         }
     ]
-
 
     const ProjektCard = ({ p }) => (
         <Col>
