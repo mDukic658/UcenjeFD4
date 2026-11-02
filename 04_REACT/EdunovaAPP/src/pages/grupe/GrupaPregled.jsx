@@ -4,6 +4,9 @@ import { Badge, Button, Table } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { RouteNames } from "../../constants"
 import SmjerService from "../../services/smjerovi/SmjerService"
+import PolaznikService from "../../services/polaznici/PolaznikService"
+import { FaFilePdf } from "react-icons/fa"
+import GrupaPDFGenerator from "../../components/GrupaPDFGenerator"
 
 
 export default function GrupaPregled() {
@@ -45,6 +48,32 @@ export default function GrupaPregled() {
         return smjer.naziv
     }
 
+
+    async function generirajPDFZaGrupu(grupa) {
+        // Dohvati smjer
+        const smjer = smjerovi.find(s => s.sifra === grupa.smjer)
+        if (!smjer) {
+            alert('Smjer nije pronađen')
+            return
+        }
+
+        // Dohvati sve polaznike
+        const odgovorPolaznici = await PolaznikService.get()
+
+        // Filtriraj polaznike koji pripadaju ovoj grupi
+        const polazniciGrupe = odgovorPolaznici.data.filter(p =>
+            grupa.polaznici && grupa.polaznici.includes(p.sifra)
+        )
+
+        // Generiraj PDF
+        const generiraj = GrupaPDFGenerator({
+            grupa,
+            smjer,
+            polaznici: polazniciGrupe
+        })
+        await generiraj()
+    }
+
     
 
 
@@ -66,6 +95,11 @@ export default function GrupaPregled() {
                     {grupe && grupe.map((grupa) => (
                         <tr key={grupa.sifra}>
                             <td>
+                                <FaFilePdf
+                                    color="#cb72dd"
+                                    style={{ cursor: 'hand' }}
+                                    onClick={() => generirajPDFZaGrupu(grupa)} title="Generiraj PDF" />
+
                                 {grupa.naziv} 
                                 <span title="Broj polaznika"> ({grupa.polaznici.length}) </span>
                             </td>

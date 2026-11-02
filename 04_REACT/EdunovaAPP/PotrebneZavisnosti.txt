@@ -14,6 +14,10 @@ npm install @lottiefiles/dotlottie-react
 npm install @faker-js/faker
 
 
+// za pdf
+npm install jspdf jspdf-autotable
+
+
 // Zanimljivije zavisnosti
 "@popperjs/core": "^2.11.6",
 "aos": "^2.3.4",

@@ -88,7 +88,7 @@ export default function AplikacijePolaznika() {
             "git": "https://github.com/lindatukera-1991",
             "url": "https://edunova11.origo.hr",
             "aplikacija": "Nannyfinder",
-            "opis": "NAKNADNO"
+            "opis": "Nannyfinder roditeljima olakšava pronalazak dadilja u njihovom gradu. Pregledajte profile, iskustvo, dostupnost i lokaciju te jednostavno kontaktirajte dadilju koja odgovara vašim potrebama."
         },
         {
             "ime": "Gorana",
@@ -112,7 +112,7 @@ export default function AplikacijePolaznika() {
             "git": "https://github.com/tonikljenak91-glitch",
             "url": "https://edunova20.origo.hr",
             "aplikacija": "Hempvend manager",
-            "opis": "Šaljem vam opis aplikacije Aparat. Aplikacija omogućuje evidenciju samoposlužnih aparata prema ID-u, nazivu i lokaciji aparata, te praćenje proizvoda, vrste proizvoda, proizvođača i cijene."
+            "opis": "Aplikacija omogućuje evidenciju samoposlužnih aparata prema ID-u, nazivu i lokaciji aparata, te praćenje proizvoda, vrste proizvoda, proizvođača i cijene."
         },
         {
             "ime": "Vedran",
@@ -197,7 +197,7 @@ export default function AplikacijePolaznika() {
             "git": "https://github.com/durdicahabjanovic1",
             "url": "https://edunova39.origo.hr",
             "aplikacija": "Nogomet",
-            "opis": "NAKNADNO"
+            "opis": "Nogometna aplikacija nudi vođenje nogometne lige, evidenciju klubova i bazu igrača uz filtriranje i brzu pretragu. Sučelje je responzivno, a podaci su osigurani kroz lokalnu pohranu. Aplikacija je izrađena u Reactu. "
         },
         {
             "ime": "Juraj",
@@ -252,8 +252,8 @@ export default function AplikacijePolaznika() {
             "prezime": "Mlinarević",
             "git": "https://github.com/dac1715",
             "url": "https://edunova34.origo.hr",
-            "aplikacija": "NIJE DEFINIRANO",
-            "opis": "NAKNADNO"
+            "aplikacija": "Gaming centar",
+            "opis": "Web aplikacija za upravljanje Gaming Centrom koja sadrži funkcionalnosti: evidencija stanica (računala i konzola), korisnika, zauzetosti stanica te pregled dostupnih igara."
         },
         {
             "ime": "Krunoslav",
@@ -328,6 +328,7 @@ export default function AplikacijePolaznika() {
             "opis": "NAKNADNO"
         }
     ]
+
 
     const ProjektCard = ({ p }) => (
         <Col>
