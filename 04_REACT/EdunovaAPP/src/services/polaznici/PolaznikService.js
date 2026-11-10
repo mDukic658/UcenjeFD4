@@ -22,7 +22,7 @@ const PrazanServis = {
     dodaj: async (polaznik) => {console.error('Servis nije implementiran')},
     promijeni: async (sifra, polaznik) => {console.error('Servis nije implementiran')},
     obrisi: async (sifra) => {console.error('Servis nije implementiran')},
-    dohvatiStranicu: async (stranica, velicinaStranice) => ({ data: [], ukupnoStranica: 0, ukupnoStavki: 0 })
+    dohvatiStranicu: async (stranica, velicinaStranice,uvjetPretrazivanja) =>  ({ data: [], ukupnoStranica: 0, ukupnoStavki: 0 }),
 }
 
 const AktivniServis = Servis || PrazanServis
@@ -35,5 +35,5 @@ export default{
     dodaj: (polaznik) => AktivniServis.dodaj(polaznik),
     promijeni: (sifra,polaznik) => AktivniServis.promijeni(sifra,polaznik),
     obrisi: (sifra) => AktivniServis.obrisi(sifra),
-    dohvatiStranicu: (stranica, velicinaStranice) => AktivniServis.dohvatiStranicu(stranica, velicinaStranice)
+    dohvatiStranicu: async (stranica, velicinaStranice, uvjetPretrazivanja) => AktivniServis.dohvatiStranicu(stranica, velicinaStranice,uvjetPretrazivanja),
 }

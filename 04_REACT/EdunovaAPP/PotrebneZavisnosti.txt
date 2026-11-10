@@ -13,9 +13,15 @@ npm install @lottiefiles/dotlottie-react
 // za generiranje podataka
 npm install @faker-js/faker
 
+// za lordicon ikone
+npm install @lordicon/react
 
 // za pdf
 npm install jspdf jspdf-autotable
+
+
+// za rad s slikama
+npm install react-cropper
 
 
 // Zanimljivije zavisnosti

@@ -39,6 +39,7 @@ async function promijeni(sifra, polaznik){
     const index = polaznici.findIndex(s => s.sifra === parseInt(sifra))
     polaznici[index] = {...polaznici[index], ...polaznik}
     spremiUStorage(polaznici)
+    spremiSliku({sifra: sifra,slika: polaznik.slika})
 }
 
 
@@ -51,12 +52,31 @@ async function obrisi(sifra){
 
 
 // Straničenje - dohvati stranicu polaznika
-async function dohvatiStranicu(stranica = 1, velicinaStranice = 8) {
-    const polaznici = dohvatiSveIzStorage();
+async function dohvatiStranicu(stranica = 1, velicinaStranice = 8,uvjetPretrazivanja='') {
+    console.log('Dohvaćanje stranice storage')
+    let filtriraniPolaznici = dohvatiSveIzStorage();
+   
+
+     if (uvjetPretrazivanja && uvjetPretrazivanja.trim() !== '') {
+        const loweruvjetPretrazivanja = uvjetPretrazivanja.toLowerCase().trim();
+        filtriraniPolaznici = filtriraniPolaznici.filter(polaznik => {
+            const ime = (polaznik.ime || '').toLowerCase();
+            const prezime = (polaznik.prezime || '').toLowerCase();
+            const email = (polaznik.email || '').toLowerCase();
+            const oib = (polaznik.oib || '').toLowerCase();
+            
+            return ime.includes(loweruvjetPretrazivanja) ||
+                   prezime.includes(loweruvjetPretrazivanja) ||
+                   email.includes(loweruvjetPretrazivanja) ||
+                   oib.includes(loweruvjetPretrazivanja);
+        });
+    }
+
+
     const pocetniIndeks = (stranica - 1) * velicinaStranice;
     const zavrsniIndeks = pocetniIndeks + velicinaStranice;
-    const stranicenjePodaci = polaznici.slice(pocetniIndeks, zavrsniIndeks);
-    const ukupnoStavki = polaznici.length;
+    const stranicenjePodaci = filtriraniPolaznici.slice(pocetniIndeks, zavrsniIndeks);
+    const ukupnoStavki = filtriraniPolaznici.length;
     const ukupnoStranica = Math.ceil(ukupnoStavki / velicinaStranice);
 
     return {
@@ -64,6 +84,36 @@ async function dohvatiStranicu(stranica = 1, velicinaStranice = 8) {
         ukupnoStranica: ukupnoStranica,
         ukupnoStavki: ukupnoStavki
     };
+}
+
+
+async function spremiSliku(entitet) {
+   try {
+    const response = await fetch('/spremiSlika.php', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        sifra: entitet.sifra,
+        slika: entitet.slika,
+      }),
+    });
+
+    // Prihvat odgovora s backenda
+    const res = await response.json();
+
+    if (!response.ok || !res.success) {
+      throw new Error(res.message || 'Greška prilikom spremanja.');
+    }
+
+    // Uspješan odgovor
+    console.log('Odgovor s backenda:', res);
+    return res;
+  } catch (error) {
+    console.error('API Greška:', error.message);
+    throw error;
+  }
 }
 
 

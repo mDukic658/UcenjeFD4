@@ -107,7 +107,9 @@ export default function Home() {
                             <Card.Body className="text-center">
                                 <p className="text-white">Grupe</p>
                                 <div className="statistikaTekst">
-                                    {animatedGrupe}
+                                    <LordIcon style={{ width: 60, height: 60 }} src="/lordicon/grupa.json" trigger="hover" />
+                                {animatedGrupe}
+                                &nbsp;<LordIcon style={{ width: 60, height: 60 }} src="/lordicon/grupa.json" trigger="hover" />
                                 </div>
                             </Card.Body>
                         </Card>

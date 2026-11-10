@@ -29,7 +29,7 @@ export default function GrupaPromjena(){
             const odabrani = polaznici.filter(p => grupa.polaznici.includes(p.sifra))
             setOdabraniPolaznici(odabrani)
         }
-    }, [grupa, polaznici])
+    }, [polaznici])
 
     async function ucitajGrupu() {
         await GrupaService.getBySifra(params.sifra).then((odgovor)=>{

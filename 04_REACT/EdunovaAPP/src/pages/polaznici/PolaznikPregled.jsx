@@ -1,9 +1,9 @@
 import { useEffect, useState } from "react"
 import PolaznikService from "../../services/polaznici/PolaznikService"
-import { Row, Col, Card, Button, Container, Pagination } from "react-bootstrap"
+import { Row, Col, Card, Button, Container, Pagination, InputGroup, Form } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { RouteNames } from "../../constants"
-import { FaEdit, FaTrash } from "react-icons/fa"
+import { FaEdit, FaSearch, FaTrash } from "react-icons/fa"
 
 export default function PolaznikPregled() {
 
@@ -13,14 +13,15 @@ export default function PolaznikPregled() {
     const [trenutnaStranica, postaviTrenutnuStranicu] = useState(1)
     const [ukupnoStranica, postaviUkupnoStranica] = useState(0)
     const [ukupnoStavki, postaviUkupnoStavki] = useState(0)
+    const [uvjetPretrazivanja, setUvjetPretrazivanja] = useState('')
     const velicinaStranice = 4
 
     useEffect(() => {
         ucitajPolaznike(trenutnaStranica)
-    }, [trenutnaStranica])
+    }, [trenutnaStranica, uvjetPretrazivanja])
 
     async function ucitajPolaznike(stranica) {
-        await PolaznikService.dohvatiStranicu(stranica, velicinaStranice).then((odgovor) => {
+        await PolaznikService.dohvatiStranicu(stranica, velicinaStranice, uvjetPretrazivanja).then((odgovor) => {
             postaviPolaznike(odgovor.data)
             postaviUkupnoStranica(odgovor.ukupnoStranica)
             postaviUkupnoStavki(odgovor.ukupnoStavki)
@@ -45,12 +46,32 @@ export default function PolaznikPregled() {
         postaviTrenutnuStranicu(stranica)
     }
 
+    function promjeniUvjetPretrazivanja(e) {
+        setUvjetPretrazivanja(e.target.value)
+        postaviTrenutnuStranicu(1)
+    }
+
     return (
         <>
             <Link to={RouteNames.POLAZNICI_DODAJ}
                 className="btn btn-success w-100 my-3">
                 Dodavanje novog polaznika
             </Link>
+
+
+            <InputGroup className="mb-3">
+                <InputGroup.Text>
+                    <FaSearch />
+                </InputGroup.Text>
+                <Form.Control
+                    type="text"
+                    placeholder="Pretraži polaznike (ime, prezime, email, OIB)..."
+                    value={uvjetPretrazivanja}
+                    onChange={promjeniUvjetPretrazivanja}
+                />
+            </InputGroup>
+
+
                 <Row>
                     {polaznici && polaznici.map((polaznik) => (
                         <Col key={polaznik.sifra} xs={12} sm={6} lg={4} xl={3} className="mb-4">

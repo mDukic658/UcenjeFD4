@@ -40,7 +40,27 @@ async function obrisi(sifra){
 
 
 // Straničenje - dohvati stranicu polaznika
-async function dohvatiStranicu(stranica = 1, velicinaStranice = 8) {
+async function dohvatiStranicu(stranica = 1, velicinaStranice = 8, uvjetPretrazivanja='') {
+
+
+     let filtriraniPolaznici = [...polaznici];
+
+    if (uvjetPretrazivanja && uvjetPretrazivanja.trim() !== '') {
+        const loweruvjetPretrazivanja = uvjetPretrazivanja.toLowerCase().trim();
+        filtriraniPolaznici = filtriraniPolaznici.filter(polaznik => {
+            const ime = (polaznik.ime || '').toLowerCase();
+            const prezime = (polaznik.prezime || '').toLowerCase();
+            const email = (polaznik.email || '').toLowerCase();
+            const oib = (polaznik.oib || '').toLowerCase();
+            
+            return ime.includes(loweruvjetPretrazivanja) ||
+                   prezime.includes(loweruvjetPretrazivanja) ||
+                   email.includes(loweruvjetPretrazivanja) ||
+                   oib.includes(loweruvjetPretrazivanja);
+        });
+    }
+
+
     const pocetniIndeks = (stranica - 1) * velicinaStranice; // (2-1) * 8, 1 * 8 = 8
     const zavrsniIndeks = pocetniIndeks + velicinaStranice; // 8+8=16
     const stranicenjePodaci = polaznici.slice(pocetniIndeks, zavrsniIndeks);
