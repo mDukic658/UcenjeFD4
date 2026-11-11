@@ -24,6 +24,10 @@ npm install jspdf jspdf-autotable
 npm install react-cropper
 
 
+// za kontrole
+npm install zod
+
+
 // Zanimljivije zavisnosti
 "@popperjs/core": "^2.11.6",
 "aos": "^2.3.4",

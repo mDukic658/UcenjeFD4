@@ -22,6 +22,7 @@ export default function PolaznikPromjena() {
     async function ucitajPolaznika(){
         await PolaznikService.getBySifra(params.sifra).then((odgovor)=>{
             setPolaznik(odgovor.data)
+            setSlikaZaCrop(odgovor.data.slika)
         })
     }
 
