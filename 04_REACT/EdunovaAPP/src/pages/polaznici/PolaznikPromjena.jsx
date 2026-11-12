@@ -1,11 +1,13 @@
+import { Button, Col, Form, Row } from "react-bootstrap";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { RouteNames } from "../../constants";
-import { Button, Col, Form, Row } from "react-bootstrap";
 import PolaznikService from "../../services/polaznici/PolaznikService";
 import { useEffect, useRef, useState } from "react";
 
 import Cropper from 'react-cropper';
 import 'cropperjs/dist/cropper.css';
+import { ShemaPolaznik } from "../../schemas/ShemaPolaznik";
+
 
 
 export default function PolaznikPromjena() {
@@ -13,22 +15,24 @@ export default function PolaznikPromjena() {
     const navigate = useNavigate()
 
     const params = useParams()
-
     const [polaznik, setPolaznik] = useState({})
+    const [errors, setErrors] = useState({});
 
     const [slikaZaCrop, setSlikaZaCrop] = useState(null);
     const cropperRef = useRef(null);
 
-    async function ucitajPolaznika(){
-        await PolaznikService.getBySifra(params.sifra).then((odgovor)=>{
+
+
+    async function ucitajPolaznika() {
+        await PolaznikService.getBySifra(params.sifra).then((odgovor) => {
             setPolaznik(odgovor.data)
             setSlikaZaCrop(odgovor.data.slika)
         })
     }
 
-    useEffect(()=>{
+    useEffect(() => {
         ucitajPolaznika()
-    },[])
+    }, [])
 
     async function promijeni(polaznik) {
         await PolaznikService.promijeni(params.sifra, polaznik).then(() => {
@@ -36,12 +40,28 @@ export default function PolaznikPromjena() {
         })
     }
 
-    function obradiSubmit(e) { // e je event
-        e.preventDefault() // nemoj odraditi submit
+    function odradiSubmit(e) { // e je event
+        e.preventDefault()
         const podaci = new FormData(e.target)
 
+        setErrors({});
+        const objektPodataka = Object.fromEntries(podaci);
+        const rezultat = ShemaPolaznik.safeParse(objektPodataka);
+        if (!rezultat.success) {
+            const noveGreske = {};
+            rezultat.error.issues.forEach((issue) => {
+                const kljuc = issue.path[0];
+                if (!noveGreske[kljuc]) {
+                    noveGreske[kljuc] = issue.message;
+                }
+            });
+            setErrors(noveGreske);
+            return;
+        }
 
-         let dataUrl=null
+
+
+        let dataUrl = null
         if (cropperRef.current && cropperRef.current.cropper && cropperRef.current.cropper.cropped) {
             const cropper = cropperRef.current.cropper;
             const selectionData = cropper.getData();
@@ -51,15 +71,13 @@ export default function PolaznikPromjena() {
             const canvasWidth = actualWidth > targetSize ? targetSize : actualWidth;
             const canvasHeight = actualHeight > targetSize ? targetSize : actualHeight;
             const canvas = cropper.getCroppedCanvas({
-            width: canvasWidth,
-            height: canvasHeight,
-            imageSmoothingEnabled: true,
-            imageSmoothingQuality: 'high',
+                width: canvasWidth,
+                height: canvasHeight,
+                imageSmoothingEnabled: true,
+                imageSmoothingQuality: 'high',
             });
             dataUrl = canvas.toDataURL('image/png');
         }
-
-
 
         promijeni({
             oib: podaci.get('oib'),
@@ -90,24 +108,36 @@ export default function PolaznikPromjena() {
         }
     }
 
+    const ocistiGresku = (nazivPolja) => {
+        if (errors[nazivPolja]) {
+            const noveGreske = { ...errors };
+            delete noveGreske[nazivPolja];
+            setErrors(noveGreske);
+        }
+    };
 
     return (
         <>
-             <h3>Promjena polaznika</h3>
+            <h3>Promjena polaznika</h3>
             <Row>
-                
+
                 <Col md={6}>
 
 
 
-                    <Form onSubmit={obradiSubmit}>
+                    <Form onSubmit={odradiSubmit}>
                         <Form.Group controlId="ime">
                             <Form.Label>Ime</Form.Label>
                             <Form.Control
                                 type="text"
                                 name="ime"
                                 defaultValue={polaznik.ime}
+                                isInvalid={!!errors.ime}
+                                onChange={() => ocistiGresku('ime')}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.ime}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="prezime">
@@ -116,7 +146,12 @@ export default function PolaznikPromjena() {
                                 type="text"
                                 name="prezime"
                                 defaultValue={polaznik.prezime}
+                                isInvalid={!!errors.prezime}
+                                onChange={() => ocistiGresku('prezime')}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.prezime}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="email">
@@ -125,7 +160,12 @@ export default function PolaznikPromjena() {
                                 type="email"
                                 name="email"
                                 defaultValue={polaznik.email}
+                                isInvalid={!!errors.email}
+                                onChange={() => ocistiGresku('email')}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.email}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Form.Group controlId="oib">
@@ -135,7 +175,12 @@ export default function PolaznikPromjena() {
                                 name="oib"
                                 maxLength={11}
                                 defaultValue={polaznik.oib}
+                                isInvalid={!!errors.oib}
+                                onChange={() => ocistiGresku('oib')}
                             />
+                            <Form.Control.Feedback type="invalid">
+                                {errors.oib}
+                            </Form.Control.Feedback>
                         </Form.Group>
 
                         <Row className="mt-4">
@@ -172,7 +217,6 @@ export default function PolaznikPromjena() {
                     />
                 </Col>
             </Row>
-
         </>
     )
 }

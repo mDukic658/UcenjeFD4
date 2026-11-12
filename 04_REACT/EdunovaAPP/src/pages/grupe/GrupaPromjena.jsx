@@ -5,8 +5,9 @@ import SmjerService from "../../services/smjerovi/SmjerService"
 import PolaznikService from "../../services/polaznici/PolaznikService"
 import { Button, Col, Form, Row, Container, Card, Table } from "react-bootstrap"
 import { RouteNames } from "../../constants"
+import { ShemaGrupa } from "../../schemas/ShemaGrupa"
 
-export default function GrupaPromjena(){
+export default function GrupaPromjena() {
 
     const navigate = useNavigate()
     const params = useParams()
@@ -17,12 +18,13 @@ export default function GrupaPromjena(){
     const [pretragaPolaznika, setPretragaPolaznika] = useState('')
     const [prikaziAutocomplete, setPrikaziAutocomplete] = useState(false)
     const [odabraniIndex, setOdabraniIndex] = useState(-1)
+    const [errors, setErrors] = useState({});
 
-    useEffect(()=>{
+    useEffect(() => {
         ucitajGrupu()
         ucitajSmjerove()
         ucitajPolaznike()
-    },[])
+    }, [])
 
     useEffect(() => {
         if (grupa.polaznici && polaznici.length > 0) {
@@ -32,7 +34,7 @@ export default function GrupaPromjena(){
     }, [polaznici])
 
     async function ucitajGrupu() {
-        await GrupaService.getBySifra(params.sifra).then((odgovor)=>{
+        await GrupaService.getBySifra(params.sifra).then((odgovor) => {
             setGrupa(odgovor.data)
         })
     }
@@ -64,16 +66,16 @@ export default function GrupaPromjena(){
 
     function filtrirajPolaznike() {
         if (!pretragaPolaznika) return []
-        return polaznici.filter(p => 
+        return polaznici.filter(p =>
             !odabraniPolaznici.find(op => op.sifra === p.sifra) &&
             (p.ime.toLowerCase().includes(pretragaPolaznika.toLowerCase()) ||
-             p.prezime.toLowerCase().includes(pretragaPolaznika.toLowerCase()))
+                p.prezime.toLowerCase().includes(pretragaPolaznika.toLowerCase()))
         )
     }
 
     function handleKeyDown(e) {
         const filtriraniPolaznici = filtrirajPolaznike()
-        
+
         if (e.key === 'ArrowDown') {
             e.preventDefault()
             setOdabraniIndex(prev => {
@@ -87,12 +89,12 @@ export default function GrupaPromjena(){
         } else if (e.key === 'ArrowUp') {
             e.preventDefault()
             setOdabraniIndex(prev => {
-                if(prev===0){
-                    return filtriraniPolaznici.length-1
+                if (prev === 0) {
+                    return filtriraniPolaznici.length - 1
                 }
                 return prev > 0 ? prev - 1 : 0
             })
-        }  else if (e.key === 'Enter' && odabraniIndex >= 0 && filtriraniPolaznici.length > 0) {
+        } else if (e.key === 'Enter' && odabraniIndex >= 0 && filtriraniPolaznici.length > 0) {
             e.preventDefault()
             dodajPolaznika(filtriraniPolaznici[odabraniIndex])
         } else if (e.key === 'Escape') {
@@ -102,46 +104,51 @@ export default function GrupaPromjena(){
     }
 
     async function promijeni(grupa) {
-        await GrupaService.promijeni(params.sifra,grupa).then(()=>{
+        await GrupaService.promijeni(params.sifra, grupa).then(() => {
             navigate(RouteNames.GRUPE)
         })
     }
 
-    function odradiSubmit(e){
+    function odradiSubmit(e) {
         e.preventDefault()
         const podaci = new FormData(e.target)
 
-        if (!podaci.get('naziv') || podaci.get('naziv').trim().length === 0) {
-            alert("Naziv je obavezan i ne smije sadržavati samo razmake!");
+        setErrors({});
+        const objektPodataka = Object.fromEntries(podaci);
+        objektPodataka.polaznici = odabraniPolaznici
+        const rezultat = ShemaGrupa.safeParse(objektPodataka);
+        if (!rezultat.success) {
+            const noveGreske = {};
+            rezultat.error.issues.forEach((issue) => {
+                const kljuc = issue.path[0];
+                if (!noveGreske[kljuc]) {
+                    noveGreske[kljuc] = issue.message;
+                }
+            });
+
+            setErrors(noveGreske);
             return;
         }
 
-        if (podaci.get('naziv').trim().length < 3) {
-            alert("Naziv grupe mora imati najmanje 3 znaka!");
-            return;
-        }
-
-        if (!podaci.get('smjer') || podaci.get('smjer') === "") {
-            alert("Morate odabrati smjer!");
-            return;
-        }
-
-
-        const odabraniSmjer = parseInt(podaci.get('smjer'));
-        if (isNaN(odabraniSmjer) || odabraniSmjer <= 0) {
-            alert("Odabrani smjer nije valjan!");
-            return;
-        }
 
         promijeni({
             naziv: podaci.get('naziv'),
-            smjer: odabraniSmjer,
+            smjer: parseInt(podaci.get('smjer')),
             polaznici: odabraniPolaznici.map(p => p.sifra)
         })
     }
 
-    return(
-         <>
+
+    const ocistiGresku = (nazivPolja) => {
+        if (errors[nazivPolja]) {
+            const noveGreske = { ...errors };
+            delete noveGreske[nazivPolja];
+            setErrors(noveGreske);
+        }
+    };
+
+    return (
+        <>
             <Form onSubmit={odradiSubmit}>
                 <Container className="mt-4">
                     <Row>
@@ -160,13 +167,21 @@ export default function GrupaPromjena(){
                                             placeholder="Unesite naziv grupe"
                                             required
                                             defaultValue={grupa.naziv}
+                                            isInvalid={!!errors.naziv}
+                                            onFocus={() => ocistiGresku('naziv')}
                                         />
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.naziv}
+                                        </Form.Control.Feedback>
                                     </Form.Group>
 
                                     {/* Smjer */}
                                     <Form.Group controlId="smjer" className="mb-3">
                                         <Form.Label className="fw-bold">Smjer</Form.Label>
-                                        <Form.Select name="smjer" required value={grupa.smjer || ''} onChange={(e) => setGrupa({...grupa, smjer: parseInt(e.target.value)})}>
+                                        <Form.Select name="smjer"
+                                            value={grupa.smjer || ''}
+                                            onChange={(e) => setGrupa({ ...grupa, smjer: parseInt(e.target.value) })} isInvalid={!!errors.smjer}
+                                            onFocus={() => ocistiGresku('smjer')}>
                                             <option value="">Odaberite smjer</option>
                                             {smjerovi && smjerovi.map((smjer) => (
                                                 <option key={smjer.sifra} value={smjer.sifra}>
@@ -174,6 +189,9 @@ export default function GrupaPromjena(){
                                                 </option>
                                             ))}
                                         </Form.Select>
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.smjer}
+                                        </Form.Control.Feedback>
                                     </Form.Group>
                                 </Card.Body>
                             </Card>
@@ -197,11 +215,18 @@ export default function GrupaPromjena(){
                                                 setPrikaziAutocomplete(e.target.value.length > 0)
                                                 setOdabraniIndex(-1)
                                             }}
-                                            onFocus={() => setPrikaziAutocomplete(pretragaPolaznika.length > 0)}
+                                            onFocus={() => {
+                                                setPrikaziAutocomplete(pretragaPolaznika.length > 0)
+                                                ocistiGresku('smjer')
+                                            }}
                                             onKeyDown={handleKeyDown}
+                                            isInvalid={!!errors.polaznici}
                                         />
+                                        <Form.Control.Feedback type="invalid">
+                                            {errors.polaznici}
+                                        </Form.Control.Feedback>
                                         {prikaziAutocomplete && filtrirajPolaznike().length > 0 && (
-                                            <div className="position-absolute w-100 bg-white border rounded shadow-sm" style={{zIndex: 1000, maxHeight: '200px', overflowY: 'auto'}}>
+                                            <div className="position-absolute w-100 bg-white border rounded shadow-sm" style={{ zIndex: 1000, maxHeight: '200px', overflowY: 'auto' }}>
                                                 {filtrirajPolaznike().map((polaznik, index) => (
                                                     <div
                                                         key={polaznik.sifra}
@@ -225,31 +250,31 @@ export default function GrupaPromjena(){
 
                                     {/* Tablica odabranih polaznika */}
                                     {odabraniPolaznici.length > 0 && (
-                                        <div style={{overflow: 'auto', maxHeight: '250px'}}>
-                                        <Table striped bordered hover size="sm">
-                                            <thead>
-                                                <tr>
-                                                    <th>Ime i prezime</th>
-                                                    <th style={{width: '80px'}}>Akcija</th>
-                                                </tr>
-                                            </thead>
-                                            <tbody>
-                                                {odabraniPolaznici.map(polaznik => (
-                                                    <tr key={polaznik.sifra}>
-                                                        <td>{polaznik.ime} {polaznik.prezime}</td>
-                                                        <td>
-                                                            <Button
-                                                                variant="danger"
-                                                                size="sm"
-                                                                onClick={() => ukloniPolaznika(polaznik.sifra)}
-                                                            >
-                                                                Obriši
-                                                            </Button>
-                                                        </td>
+                                        <div style={{ overflow: 'auto', maxHeight: '250px' }}>
+                                            <Table striped bordered hover size="sm">
+                                                <thead>
+                                                    <tr>
+                                                        <th>Ime i prezime</th>
+                                                        <th style={{ width: '80px' }}>Akcija</th>
                                                     </tr>
-                                                ))}
-                                            </tbody>
-                                        </Table>
+                                                </thead>
+                                                <tbody>
+                                                    {odabraniPolaznici.map(polaznik => (
+                                                        <tr key={polaznik.sifra}>
+                                                            <td>{polaznik.ime} {polaznik.prezime}</td>
+                                                            <td>
+                                                                <Button
+                                                                    variant="danger"
+                                                                    size="sm"
+                                                                    onClick={() => ukloniPolaznika(polaznik.sifra)}
+                                                                >
+                                                                    Obriši
+                                                                </Button>
+                                                            </td>
+                                                        </tr>
+                                                    ))}
+                                                </tbody>
+                                            </Table>
                                         </div>
                                     )}
                                     {odabraniPolaznici.length === 0 && (

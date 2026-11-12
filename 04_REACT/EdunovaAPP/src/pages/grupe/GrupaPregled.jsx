@@ -114,7 +114,7 @@ export default function GrupaPregled() {
 
     return (
         <>
-            <Link to={RouteNames.GRUPE_NOVI}
+            <Link to={RouteNames.GRUPE_DODAJ}
                 className="btn btn-success w-100 my-3">
                 Dodavanje nove grupe
             </Link>

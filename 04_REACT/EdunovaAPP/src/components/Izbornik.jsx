@@ -45,16 +45,19 @@ export default function Izbornik() {
                             <NavDropdown.Item
                                 onClick={() => navigate(RouteNames.GRUPE)}
                             >Grupe</NavDropdown.Item>
-                             <NavDropdown.Divider />
+                            <NavDropdown.Divider />
                             <NavDropdown.Item
-                                onClick={()=>navigate(RouteNames.GENERIRANJE_PODATAKA)}
-                                >Generiraj podatke</NavDropdown.Item>
+                                onClick={() => navigate(RouteNames.OPERATERI)}
+                            >Operateri</NavDropdown.Item>
+                            <NavDropdown.Item
+                                onClick={() => navigate(RouteNames.GENERIRANJE_PODATAKA)}
+                            >Generiraj podatke</NavDropdown.Item>
                         </NavDropdown>
                         <Nav.Link
                             onClick={() => { navigate(RouteNames.RASPORED) }}
                         >Raspored</Nav.Link>
                         <Nav.Link
-                        onClick={()=>navigate(RouteNames.APLIKACIJE_POLAZNIKA)}
+                            onClick={() => navigate(RouteNames.APLIKACIJE_POLAZNIKA)}
                         >Aplikacije polaznika</Nav.Link>
                     </Nav>
                 </Navbar.Collapse>

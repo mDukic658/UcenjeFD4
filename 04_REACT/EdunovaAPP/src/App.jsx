@@ -14,9 +14,13 @@ import PolaznikNovi from './pages/polaznici/PolaznikNovi'
 import PolaznikPromjena from './pages/polaznici/PolaznikPromjena'
 import GrupaPregled from './pages/grupe/GrupaPregled'
 import GrupaNovi from './pages/grupe/GrupaNovi'
-import GrupaPromjena from './pages/grupe/Grupapromjena'
+import GrupaPromjena from './pages/grupe/GrupaPromjena'
 import GeneriranjePodataka from './pages/GeneriranjePodataka'
 import AplikacijePolaznika from './pages/AplikacijePolaznika'
+import OperaterPregled from './pages/operateri/OperaterPregled'
+import OperaterNovi from './pages/operateri/OperaterNovi'
+import OperaterPromjena from './pages/operateri/OperaterPromjena'
+import OperaterPromjenaLozinke from './pages/operateri/OperaterPromjenaLozinke'
 
 function App() {
 
@@ -40,6 +44,11 @@ function App() {
             <Route path={RouteNames.GRUPE} element={<GrupaPregled />} />
             <Route path={RouteNames.GRUPE_DODAJ} element={<GrupaNovi />} />
             <Route path={RouteNames.GRUPE_PROMJENA} element={<GrupaPromjena />} />
+
+            <Route path={RouteNames.OPERATERI} element={<OperaterPregled />} />
+            <Route path={RouteNames.OPERATERI_NOVI} element={<OperaterNovi />} />
+            <Route path={RouteNames.OPERATERI_PROMJENA} element={<OperaterPromjena />} />
+            <Route path={RouteNames.OPERATERI_PROMJENA_LOZINKE} element={<OperaterPromjenaLozinke />} />
 
             <Route path={RouteNames.GENERIRANJE_PODATAKA} element={<GeneriranjePodataka />} />
 

@@ -28,6 +28,10 @@ npm install react-cropper
 npm install zod
 
 
+// za hash lozinki
+npm install bcryptjs
+
+
 // Zanimljivije zavisnosti
 "@popperjs/core": "^2.11.6",
 "aos": "^2.3.4",

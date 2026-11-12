@@ -3,6 +3,7 @@ import { RouteNames } from "../../constants";
 import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import SmjerService from "../../services/smjerovi/SmjerService";
 import { useEffect, useState } from "react";
+import { ShemaSmjer } from "../../schemas/ShemaSmjer";
 
 
 export default function SmjerPromjena() {
@@ -11,6 +12,7 @@ export default function SmjerPromjena() {
     const params = useParams()
     const [smjer, setSmjer] = useState({})
     const [aktivan, setAktivan] = useState(false)
+    const [errors, setErrors] = useState({});
 
     async function ucitajSmjer() {
         await SmjerService.getBySifra(params.sifra).then((odgovor) => {
@@ -34,6 +36,22 @@ export default function SmjerPromjena() {
     function obradiSubmit(e) { // e je event
         e.preventDefault() // nemoj odraditi submit
         const podaci = new FormData(e.target)
+
+        setErrors({});
+        const objektPodataka = Object.fromEntries(podaci);
+        const rezultat = ShemaSmjer.safeParse(objektPodataka);
+        if (!rezultat.success) {
+            const noveGreske = {};
+            rezultat.error.issues.forEach((issue) => {
+                const kljuc = issue.path[0];
+                if (!noveGreske[kljuc]) {
+                    noveGreske[kljuc] = issue.message;
+                }
+            });
+            setErrors(noveGreske);
+            return;
+        }
+
         promijeni({
             naziv: podaci.get('naziv'),
             trajanje: parseInt(podaci.get('trajanje')),
@@ -42,6 +60,14 @@ export default function SmjerPromjena() {
             aktivan: aktivan
         })
     }
+
+    const ocistiGresku = (nazivPolja) => {
+        if (errors[nazivPolja]) {
+            const noveGreske = { ...errors };
+            delete noveGreske[nazivPolja];
+            setErrors(noveGreske);
+        }
+    };
 
 
     return (
@@ -55,8 +81,13 @@ export default function SmjerPromjena() {
                                 <Form.Group controlId="naziv">
                                     <Form.Label>Naziv</Form.Label>
                                     <Form.Control type="text"
-                                        name="naziv" required className="granica"
-                                        defaultValue={smjer.naziv} />
+                                        name="naziv" className="granica"
+                                        defaultValue={smjer.naziv}
+                                        isInvalid={!!errors.naziv}
+                                        onFocus={() => ocistiGresku('naziv')} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.naziv}
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
                             <Col xs={7} className="mt-2">
@@ -66,7 +97,12 @@ export default function SmjerPromjena() {
                                         className="granica"
                                         style={{ textAlign: 'right' }}
                                         name="trajanje" step={1}
-                                        defaultValue={smjer.trajanje} />
+                                        defaultValue={smjer.trajanje}
+                                        isInvalid={!!errors.trajanje}
+                                        onFocus={() => ocistiGresku('trajanje')} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.trajanje}
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
                             <Col xs={5} className="mt-2">
@@ -76,7 +112,12 @@ export default function SmjerPromjena() {
                                         className="granica"
                                         style={{ textAlign: 'right' }}
                                         name="cijena" step={0.01}
-                                        defaultValue={smjer.cijena} />
+                                        defaultValue={smjer.cijena}
+                                        isInvalid={!!errors.cijena}
+                                        onFocus={() => ocistiGresku('cijena')} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.cijena}
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
                             <Col xs={7} className="mt-2">
@@ -84,18 +125,27 @@ export default function SmjerPromjena() {
                                     <Form.Label>Datum pokretanja</Form.Label>
                                     <Form.Control type="date"
                                         className="granica"
-                                        onClick={(e) => e.target.showPicker()}
-                                        onFocus={(e) => e.target.showPicker()}
+                                        onClick={(e) => {
+                                            ocistiGresku('datumPokretanja')
+                                        }}
+                                        onFocus={(e) => {
+                                            e.target.showPicker()
+                                            ocistiGresku('datumPokretanja')
+                                        }}
                                         name="datumPokretanja"
-                                        defaultValue={smjer.datumPokretanja} />
+                                        defaultValue={smjer.datumPokretanja}
+                                        isInvalid={!!errors.datumPokretanja} />
+                                    <Form.Control.Feedback type="invalid">
+                                        {errors.datumPokretanja}
+                                    </Form.Control.Feedback>
                                 </Form.Group>
                             </Col>
                             <Col xs={5}>
                                 <Form.Group controlId="aktivan" className="mt-3">
                                     <Form.Label>Aktivan</Form.Label>
-                                    <div class="form-check">
+                                    <div className="form-check">
                                         <input id="aktivan"
-                                            class="form-check-input granica"
+                                            className="form-check-input granica"
                                             type="checkbox" name="aktivan"
                                             checked={aktivan}
                                             onChange={(e) => { setAktivan(e.target.checked) }} />
