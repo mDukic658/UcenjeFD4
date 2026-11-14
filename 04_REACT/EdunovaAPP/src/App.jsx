@@ -21,45 +21,65 @@ import OperaterPregled from './pages/operateri/OperaterPregled'
 import OperaterNovi from './pages/operateri/OperaterNovi'
 import OperaterPromjena from './pages/operateri/OperaterPromjena'
 import OperaterPromjenaLozinke from './pages/operateri/OperaterPromjenaLozinke'
+import useAuth from './hooks/useAuth'
+import Login from './pages/login/Login'
+import Registracija from './pages/registracija/Registracija'
+import NadzornaPloca from './pages/NadzornaPloca'
+
+
 
 function App() {
 
+  const { isLoggedIn, authUser } = useAuth()
+
   return (
-    <>
-      <Container>
-        <Izbornik />
-        <Container className='app'>
-          <Routes>
+    <Container>
+      <Izbornik />
+      <Container className='app'>
+        <Routes>
             <Route path={RouteNames.HOME} element={<Home />} />
-            <Route path={RouteNames.RASPORED} element={<Raspored />} />
 
-            <Route path={RouteNames.SMJEROVI} element={<SmjerPregled />} />
-            <Route path={RouteNames.SMJEROVI_DODAJ} element={<SmjerNovi />} />
-            <Route path={RouteNames.SMJEROVI_PROMJENA} element={<SmjerPromjena />} />
+            {isLoggedIn ? (
+              <>
+                <Route path={RouteNames.NADZORNA_PLOCA} element={<NadzornaPloca />} />
 
-            <Route path={RouteNames.POLAZNICI} element={<PolaznikPregled />} />
-            <Route path={RouteNames.POLAZNICI_DODAJ} element={<PolaznikNovi />} />
-            <Route path={RouteNames.POLAZNICI_PROMJENA} element={<PolaznikPromjena />} />
+                <Route path={RouteNames.SMJEROVI} element={<SmjerPregled />} />
+                <Route path={RouteNames.SMJEROVI_DODAJ} element={<SmjerNovi />} />
+                <Route path={RouteNames.SMJEROVI_PROMJENA} element={<SmjerPromjena />} />
+                <Route path={RouteNames.POLAZNICI} element={<PolaznikPregled />} />
+                <Route path={RouteNames.POLAZNICI_DODAJ} element={<PolaznikNovi />} />
+                <Route path={RouteNames.POLAZNICI_PROMJENA} element={<PolaznikPromjena />} />
+                <Route path={RouteNames.GRUPE} element={<GrupaPregled />} />
+                <Route path={RouteNames.GRUPE_DODAJ} element={<GrupaNovi />} />
+                <Route path={RouteNames.GRUPE_PROMJENA} element={<GrupaPromjena />} />
+                
+                
+                {authUser.uloga === 'admin' && (
+                  <>
+                    <Route path={RouteNames.OPERATERI} element={<OperaterPregled />} />
+                    <Route path={RouteNames.OPERATERI_NOVI} element={<OperaterNovi />} />
+                    <Route path={RouteNames.OPERATERI_PROMJENA} element={<OperaterPromjena />} />
+                    <Route path={RouteNames.OPERATERI_PROMJENA_LOZINKE} element={<OperaterPromjenaLozinke />} />
+                    <Route path={RouteNames.GENERIRANJE_PODATAKA} element={<GeneriranjePodataka />} />
+                  </>
+                )}
 
-            <Route path={RouteNames.GRUPE} element={<GrupaPregled />} />
-            <Route path={RouteNames.GRUPE_DODAJ} element={<GrupaNovi />} />
-            <Route path={RouteNames.GRUPE_PROMJENA} element={<GrupaPromjena />} />
+                
+                <Route path={RouteNames.APLIKACIJE_POLAZNIKA} element={<AplikacijePolaznika />} />
+                <Route path={RouteNames.RASPORED} element={<Raspored />} />
 
-            <Route path={RouteNames.OPERATERI} element={<OperaterPregled />} />
-            <Route path={RouteNames.OPERATERI_NOVI} element={<OperaterNovi />} />
-            <Route path={RouteNames.OPERATERI_PROMJENA} element={<OperaterPromjena />} />
-            <Route path={RouteNames.OPERATERI_PROMJENA_LOZINKE} element={<OperaterPromjenaLozinke />} />
-
-            <Route path={RouteNames.GENERIRANJE_PODATAKA} element={<GeneriranjePodataka />} />
-
-            <Route path={RouteNames.APLIKACIJE_POLAZNIKA} element={<AplikacijePolaznika />} />
-
+              </>
+            ) : (
+              <>
+                <Route path={RouteNames.LOGIN} element={<Login />} />
+                <Route path={RouteNames.REGISTRACIJA} element={<Registracija />} />
+              </>
+            )}
           </Routes>
-        </Container>
-        <hr />
-        &copy; {IME_APLIKACIJE}
       </Container>
-    </>
+      <hr />
+      &copy; {IME_APLIKACIJE}
+    </Container>
   )
 }
 

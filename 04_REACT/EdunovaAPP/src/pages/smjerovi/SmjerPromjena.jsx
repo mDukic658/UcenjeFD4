@@ -160,7 +160,7 @@ export default function SmjerPromjena() {
                             </Col>
                             <Col xs={6} className="visinaAkcija" style={{ textAlign: 'right' }}>
                                 <Button type="submit" variant="success" className="granica">
-                                    Promjenio
+                                    Promjeni
                                 </Button>
                             </Col>
                         </Row>

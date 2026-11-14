@@ -189,17 +189,17 @@ export default function PolaznikPromjena() {
                                     Odustani
                                 </Link>
                             </Col>
-                            <Col>
+                            <Col style={{textAlign: 'right'}}>
                                 <Button type="submit" variant="success">
-                                    Promjeni polaznika
+                                    Promjeni
                                 </Button>
                             </Col>
                         </Row>
 
                     </Form>
                 </Col>
-                <Col lg={6}>
-                    <input className='mb-3' type='file' onChange={onChangeImage} />
+                <Col lg={6} className="slika-polaznik-kontejner">
+                    <input className='mb-3 form-control' type='file' onChange={onChangeImage} />
                     <Cropper
                         src={slikaZaCrop}
                         style={{ height: 400, width: '100%' }}

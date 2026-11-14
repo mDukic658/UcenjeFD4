@@ -105,14 +105,14 @@ export default function PolaznikNovi() {
           
 
                 <Row className="mt-4">
-                    <Col>
+                    <Col xs={4}>
                         <Link to={RouteNames.POLAZNICI} className="btn btn-danger">
                             Odustani
                         </Link>
                     </Col>
-                    <Col>
+                    <Col xs={8} style={{textAlign: 'right'}}>
                         <Button type="submit" variant="success">
-                            Dodaj novog polaznika
+                            Dodaj 
                         </Button>
                     </Col>
                 </Row>

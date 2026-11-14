@@ -24,7 +24,7 @@ export default function GeneriranjePodataka() {
     });
 
     const generirajSmjerove = async (broj) => {
-        const smjerovi = [];
+
         const naziviSmjerova = [
             'Web programiranje',
             'Java programiranje',
@@ -51,14 +51,10 @@ export default function GeneriranjePodataka() {
                 datumPokretanja: faker.date.soon().toISOString().split('T')[0],
                 aktivan: faker.datatype.boolean()
             });
-            smjerovi.push(rezultat.data);
         }
-        return smjerovi;
     };
 
     const generirajPolaznike = async (broj) => {
-        const polaznici = [];
-
         for (let i = 0; i < broj; i++) {
             const polaznik = {
                 ime: i % 2 === 0 ? faker.person.firstName('male') : faker.person.firstName('female'),
@@ -68,9 +64,7 @@ export default function GeneriranjePodataka() {
                 slika: 'data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAMgAAAEsCAIAAAAJmGvpAAADD0lEQVR4nO3SQQ0AIRDAwOP8C1tZmKAhITMK+uiamQ9O+28H8CZjkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBYJY5EwFgljkTAWCWORMBaJDVgNBLAk8IkcAAAAAElFTkSuQmCC'
             };
             await PolaznikService.dodaj(polaznik);
-            polaznici.push(polaznik);
         }
-        return polaznici;
     };
 
     const generirajGrupe = async (broj) => {
@@ -116,8 +110,7 @@ export default function GeneriranjePodataka() {
         setPoruka(null);
 
         try {
-            const smjerovi = await generirajSmjerove(brojSmjerova);
-
+            await generirajSmjerove(brojSmjerova);
             setPoruka({
                 tip: 'success',
                 tekst: `Uspješno generirano ${brojSmjerova} smjerova!`
@@ -349,8 +342,6 @@ export default function GeneriranjePodataka() {
     };
 
 
-
-
     return (
         <Container className="mt-4">
             <h1>Generiranje podataka</h1>
@@ -484,7 +475,7 @@ export default function GeneriranjePodataka() {
             </p>
 
             <Row className="mt-3">
-                <Col md={4}>
+                <Col md={3}>
                     <Button
                         variant="danger"
                         onClick={handleObrisiSmjerove}
@@ -494,7 +485,7 @@ export default function GeneriranjePodataka() {
                         {loading ? 'Brisanje...' : 'Obriši sve smjerove'}
                     </Button>
                 </Col>
-                <Col md={4}>
+                <Col md={3}>
                     <Button
                         variant="danger"
                         onClick={handleObrisiPolaznike}
@@ -504,7 +495,7 @@ export default function GeneriranjePodataka() {
                         {loading ? 'Brisanje...' : 'Obriši sve polaznike'}
                     </Button>
                 </Col>
-                <Col md={4}>
+                <Col md={3}>
                     <Button
                         variant="danger"
                         onClick={handleObrisiGrupe}
@@ -512,6 +503,16 @@ export default function GeneriranjePodataka() {
                         className="w-100 mb-2"
                     >
                         {loading ? 'Brisanje...' : 'Obriši sve grupe'}
+                    </Button>
+                </Col>
+                <Col md={3}>
+                    <Button
+                        variant="danger"
+                        onClick={handleObrisiOperatere}
+                        disabled={loading}
+                        className="w-100 mb-2"
+                    >
+                        {loading ? 'Brisanje...' : 'Obriši sve operatere'}
                     </Button>
                 </Col>
             </Row>

@@ -229,7 +229,7 @@ export default function AplikacijePolaznika() {
             "git": "https://github.com/tomislavg1980/EvidencijaRepromaterijala",
             "url": "https://edunova59.origo.hr",
             "aplikacija": "Evidencija repromaterijala",
-            "opis": "NAKNADNO"
+            "opis": "Evidencija repromaterijala je web aplikacija za vođenje popisa artikala repromaterijala (sirovine, pomoćni materijal, ambalaža) i prometa zaliha, tj. ulaza i izlaza tih artikala."
         },
         {
             "ime": "Marko",

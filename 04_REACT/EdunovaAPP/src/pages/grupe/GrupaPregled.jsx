@@ -4,7 +4,7 @@ import SmjerService from "../../services/smjerovi/SmjerService"
 import { Button, Table } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { RouteNames } from "../../constants"
-import { FaFilePdf } from "react-icons/fa"
+import { FaEdit, FaFilePdf, FaTrash } from "react-icons/fa"
 import GrupaPDFGenerator from "../../components/GrupaPDFGenerator"
 import PolaznikService from "../../services/polaznici/PolaznikService"
 
@@ -121,36 +121,43 @@ export default function GrupaPregled() {
             <Table hover striped bordered>
                 <thead>
                     <tr>
-                        <th>Naziv</th>
-                        <th>Smjer</th>
-                        <th>Akcija</th>
+                        <th style={{width: '65%'}}>Naziv</th>
+                        <th style={{width: '35%'}}>Akcija</th>
                     </tr>
                 </thead>
                 <tbody>
                     {grupe && grupe.map((grupa) => (
                         <tr key={grupa.sifra}>
                             <td>
-                                <FaFilePdf
-                                    color="#cb72dd"
-                                    style={{ cursor: 'hand' }}
-                                    onClick={() => generirajPDFZaGrupu(grupa)} title="Generiraj PDF" />
-
-                                {grupa.naziv}
+                                
+                                <span style={{fontWeight: 'bold'}}>
+                                    {grupa.naziv} </span>
                                 <span
                                     className="text-center"
-                                    style={{ cursor: 'pointer', fontWeight: 'bold' }}
+                                    style={{ cursor: 'pointer' }}
                                     onMouseEnter={() => handleMouseEnter(grupa.polaznici)}
                                     onMouseMove={handleMouseMove}
-                                    onMouseLeave={handleMouseLeave}>({grupa.polaznici.length})</span></td>
-                            <td>{dohvatiNazivSmjera(grupa.smjer)}</td>
+                                    onMouseLeave={handleMouseLeave}>({grupa.polaznici.length}) </span>
+                                    
+                                    {dohvatiNazivSmjera(grupa.smjer)}</td>
                             <td>
-                                <Button onClick={() => { navigate(`/grupe/${grupa.sifra}`) }}>
-                                    Promjeni
-                                </Button>
+                                <FaFilePdf
+                                    color="#cb72dd"
+                                    style={{ cursor: 'hand', fontSize: '2rem' }}
+                                    onClick={() => generirajPDFZaGrupu(grupa)} title="Generiraj PDF" />
                                 &nbsp;&nbsp;
-                                <Button variant="danger" onClick={() => obrisi(grupa.sifra)}>
-                                    Obriši
-                                </Button>
+                                <FaEdit 
+                                onClick={() => { navigate(`/grupe/${grupa.sifra}`) }}
+                                title="Promjeni"
+                                color="green"
+                                style={{fontSize: '2rem'}}
+                                />
+                                &nbsp;&nbsp;
+                                <FaTrash
+                                onClick={() => obrisi(grupa.sifra)}
+                                color="red"
+                                title="Obriši"
+                                />
                             </td>
                         </tr>
                     ))}

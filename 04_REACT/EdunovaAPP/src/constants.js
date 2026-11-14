@@ -24,6 +24,11 @@ export const RouteNames = {
 
 
     GENERIRANJE_PODATAKA: '/generiraj-podatke',
+
+    LOGIN: '/login',
+    REGISTRACIJA: '/registracija',
+
+    NADZORNA_PLOCA: '/nadzorna-ploca',
     
     APLIKACIJE_POLAZNIKA: '/aplikacije-polaznika'
 }

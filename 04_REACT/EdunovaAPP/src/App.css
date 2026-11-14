@@ -31,3 +31,13 @@
   color: white;
   text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
 }
+
+@media (max-width: 600px){
+  .slika-polaznik-kontejner{
+    margin-top: 2rem;
+  }
+
+  .polaznici-grupa{
+    margin-top: 1rem;
+  }
+}

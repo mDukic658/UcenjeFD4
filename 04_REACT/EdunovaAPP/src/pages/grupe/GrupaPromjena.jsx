@@ -198,7 +198,7 @@ export default function GrupaPromjena() {
                         </Col>
 
                         {/* Desna strana - Polaznici */}
-                        <Col md={6}>
+                        <Col md={6} className="polaznici-grupa">
                             <Card className="shadow-sm">
                                 <Card.Body>
                                     <Card.Title className="mb-4">Polaznici</Card.Title>
@@ -285,17 +285,18 @@ export default function GrupaPromjena() {
                         </Col>
                     </Row>
 
-                    <hr className="my-4" />
-
-                    {/* Gumbi za akciju */}
-                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <Link to={RouteNames.GRUPE} className="btn btn-danger px-4">
-                            Odustani
-                        </Link>
-                        <Button type="submit" variant="success">
-                            Promjeni grupu
-                        </Button>
-                    </div>
+                   <Row className="mt-4">
+                        <Col xs={4}>
+                            <Link to={RouteNames.GRUPE} className="btn btn-danger px-4">
+                                Odustani
+                            </Link>
+                        </Col>
+                        <Col xs={8} style={{ textAlign: 'right' }}>
+                            <Button type="submit" variant="success">
+                                Promjeni
+                            </Button>
+                        </Col>
+                    </Row>
                 </Container>
             </Form>
         </>

@@ -177,7 +177,7 @@ export default function GrupaNovi() {
                         </Col>
 
                         {/* Desna strana - Polaznici */}
-                        <Col md={6}>
+                        <Col md={6} className="polaznici-grupa">
                             <Card className="shadow-sm">
                                 <Card.Body>
                                     <Card.Title className="mb-4">Polaznici</Card.Title>
@@ -265,16 +265,20 @@ export default function GrupaNovi() {
                         </Col>
                     </Row>
 
-                    <hr className="my-4" />
+                    <Row className="mt-4">
+                        <Col xs={4}>
+                            <Link to={RouteNames.GRUPE} className="btn btn-danger px-4">
+                                Odustani
+                            </Link>
+                        </Col>
+                        <Col xs={8} style={{ textAlign: 'right' }}>
+                            <Button type="submit" variant="success">
+                                Dodaj
+                            </Button>
+                        </Col>
+                    </Row>
 
-                    <div className="d-grid gap-2 d-md-flex justify-content-md-end">
-                        <Link to={RouteNames.GRUPE} className="btn btn-danger px-4">
-                            Odustani
-                        </Link>
-                        <Button type="submit" variant="success">
-                            Dodaj novu grupu
-                        </Button>
-                    </div>
+
                 </Container>
             </Form>
         </>
