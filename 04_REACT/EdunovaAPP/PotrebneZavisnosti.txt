@@ -32,6 +32,14 @@ npm install zod
 npm install bcryptjs
 
 
+// grafovi
+npm install highcharts highcharts-react-official
+
+
+// RIVE animacije
+npm install @rive-app/react-canvas
+
+
 // Zanimljivije zavisnosti
 "@popperjs/core": "^2.11.6",
 "aos": "^2.3.4",
