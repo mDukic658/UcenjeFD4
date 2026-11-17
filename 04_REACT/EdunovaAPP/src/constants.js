@@ -34,4 +34,13 @@ export const RouteNames = {
 }
 
 // memorija, localStorage, firebase
-export const DATA_SOURCE = 'localStorage'
+export const DATA_SOURCE = 'firebase';
+
+// Predavač je e.
+// Polaznici su eN. gdje je N broj s origo servera (npr e1.)
+export const PrefixStorage = {
+    SMJEROVI: 'e.smjerovi',
+    POLAZNICI: 'e.polaznici',
+    GRUPE: 'e.grupe',
+    OPERATERI: 'e.operateri'
+}

@@ -1,16 +1,20 @@
 import { DATA_SOURCE } from "../../constants"
+import PolaznikServiceFireBase from "./PolaznikServiceFireBase"
 import PolaznikServiceLocalStorage from "./PolaznikServiceLocalStorage"
 import PolaznikServiceMemorija from "./PolaznikServiceMemorija"
 
 
 let Servis = null
 
-switch(DATA_SOURCE){
+switch (DATA_SOURCE) {
     case 'memorija':
         Servis = PolaznikServiceMemorija
         break
     case 'localStorage':
         Servis = PolaznikServiceLocalStorage
+        break
+    case 'firebase':
+        Servis = PolaznikServiceFireBase
         break
     default:
         Servis = null

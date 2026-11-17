@@ -1,16 +1,20 @@
 import { DATA_SOURCE } from "../../constants"
+import SmjerServiceFireBase from "./SmjerServiceFireBase"
 import SmjerServiceLocalStorage from "./SmjerServiceLocalStorage"
 import SmjerServiceMemorija from "./SmjerServiceMemorija"
 
 
 let Servis = null
 
-switch(DATA_SOURCE){
+switch (DATA_SOURCE) {
     case 'memorija':
         Servis = SmjerServiceMemorija
         break
     case 'localStorage':
         Servis = SmjerServiceLocalStorage
+        break
+    case 'firebase':
+        Servis = SmjerServiceFireBase
         break
     default:
         Servis = null

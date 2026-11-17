@@ -10,6 +10,10 @@ import { smjerovi } from '../services/smjerovi/SmjerPodaci';
 import { operateri } from '../services/operateri/OperaterPodaci';
 import { grupe } from '../services/grupe/GrupaPodaci';
 import { polaznici } from '../services/polaznici/PolaznikPodaci';
+import GrupaServiceFireBase from '../services/grupe/GrupaServiceFireBase';
+import PolaznikServiceFireBase from '../services/polaznici/PolaznikServiceFireBase';
+import SmjerServiceFireBase from '../services/smjerovi/SmjerServiceFireBase';
+import OperaterServiceFireBase from '../services/operateri/OperaterServiceFireBase';
 
 
 export default function GeneriranjePodataka() {
@@ -381,6 +385,79 @@ const handleMemorijaULocalStorage = async () => {
             setLoading(false);
         }
     };
+
+
+    const handleMemorijaUFirebase = async () => {
+        if (!window.confirm('Jeste li sigurni da želite pretočiti iz memorije u firebase?')) {
+        return;
+    }
+
+    setLoading(true);
+    setPoruka(null);
+
+    try {
+        // 1. Operateri (mogu ići paralelno jer ne trebamo njihove ID-ove za kasnije)
+        const operateriPromises = operateri.map(e => {
+            const { sifra, ...ostatak } = e;
+            return OperaterServiceFireBase.dodajBezHash(ostatak);
+        });
+        await Promise.all(operateriPromises);
+
+
+        // 2. Smjerovi (trebamo šifre za grupe)
+        let mapiranjeSifriSmjerova = [];
+        for (const e of smjerovi) {
+            const { sifra, ...ostatak } = e;
+            const fb = await SmjerServiceFireBase.dodaj(ostatak);
+            const noviId = fb.id; 
+            mapiranjeSifriSmjerova.push({ sifram: sifra, sifraf: noviId });
+        }
+
+
+        // 3. Polaznici (trebamo šifre za grupe)
+        let mapiranjeSifriPolaznika = [];
+        for (const e of polaznici) {
+            const { sifra, ...ostatak } = e;
+            const fb = await PolaznikServiceFireBase.dodaj(ostatak);
+            const noviId = fb.data.sifra;
+            mapiranjeSifriPolaznika.push({ sifram: sifra, sifraf: noviId });
+        }
+
+
+
+        // 4. Grupe (povezivanje starih šifri s novim Firebase ID-ovima)
+        for (const e of grupe) {
+            const { sifra, ...ostatak } = e;
+
+            // Pronađi novi ID smjera
+            const mSmjer = mapiranjeSifriSmjerova.find(m => m.sifram == ostatak.smjer);
+            ostatak.smjer = mSmjer ? mSmjer.sifraf : null;
+
+            // Mapiraj polaznike na njihove nove ID-ove
+            ostatak.polaznici = ostatak.polaznici.map(pSifra => {
+                const mPolaznik = mapiranjeSifriPolaznika.find(m => m.sifram == pSifra);
+                return mPolaznik ? mPolaznik.sifraf : null;
+            }).filter(id => id !== null); // Makni null ako polaznik nije pronađen
+
+            //console.log('Dodajem grupu:', ostatak);
+            await GrupaServiceFireBase.dodaj(ostatak);
+        }
+
+        setPoruka({
+            tip: 'success',
+            tekst: 'Uspješno presipano u Firebase'
+        });
+
+    } catch (error) {
+        console.error("Greška pri presipanju:", error);
+        setPoruka({
+            tip: 'error',
+            tekst: 'Došlo je do greške prilikom sinkronizacije.'
+        });
+    } finally {
+        setLoading(false);
+    }
+    };
     
 
 
@@ -576,16 +653,26 @@ const handleMemorijaULocalStorage = async () => {
             </p>
 
             <Row className="mt-3">
-                <Col md={3}>
+                <Col md={6}>
                     <Button
                         variant="danger"
                         onClick={handleMemorijaULocalStorage}
                         disabled={loading}
                         className="w-100 mb-2"
                     >
-                        {loading ? 'Presipavanje...' : 'Presipaj'}
+                        {loading ? 'Presipavanje...' : 'Iz memorije u localStorage'}
                     </Button>
                 </Col>
+                <Col md={6}>
+                            <Button
+                                variant="danger"
+                                onClick={handleMemorijaUFirebase}
+                                disabled={loading}
+                                className="w-100 mb-2"
+                            >
+                                {loading ? 'Pretakanje...' : 'Iz memorije u firebase'}
+                            </Button>
+                        </Col>
                
             </Row>
             </>)}   

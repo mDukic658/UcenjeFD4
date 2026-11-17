@@ -40,6 +40,10 @@ npm install highcharts highcharts-react-official
 npm install @rive-app/react-canvas
 
 
+// rad s firebase
+npm install firebase
+
+
 // Zanimljivije zavisnosti
 "@popperjs/core": "^2.11.6",
 "aos": "^2.3.4",

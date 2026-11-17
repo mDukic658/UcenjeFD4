@@ -1,6 +1,7 @@
 import OperaterServiceLocalStorage from "./OperaterServiceLocalStorage"
 import OperaterServiceMemorija from "./OperaterServiceMemorija"
 import { DATA_SOURCE } from "../../constants"
+import OperaterServiceFireBase from "./OperaterServiceFireBase"
 
 let Servis = null
 
@@ -11,7 +12,10 @@ switch (DATA_SOURCE) {
         break
     case 'localStorage':
         Servis = OperaterServiceLocalStorage
-        break;
+        break
+    case 'firebase':
+        Servis = OperaterServiceFireBase
+        break
     default:
         Servis = null
 }

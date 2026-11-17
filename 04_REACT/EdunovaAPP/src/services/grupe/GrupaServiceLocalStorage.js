@@ -1,12 +1,13 @@
-const STORAGE_KEY='grupe'
+import { PrefixStorage } from "../../constants"
 
-function dohvatiSveIzStorage(){
-    const podaci = localStorage.getItem(STORAGE_KEY)
+
+function dohvatiSveIzStorage() {
+    const podaci = localStorage.getItem(PrefixStorage.GRUPE)
     return podaci ? JSON.parse(podaci) : []
 }
 
-function spremiUStorage(podaci){
-    localStorage.setItem(STORAGE_KEY, JSON.stringify(podaci))
+function spremiUStorage(podaci) {
+    localStorage.setItem(PrefixStorage.GRUPE, JSON.stringify(podaci))
 }
 
 async function get(){

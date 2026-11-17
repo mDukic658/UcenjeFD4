@@ -18,7 +18,3 @@ export const operateri = [
         uloga: 'korisnik'
     }
 ]
-
-export default{
-    operateri
-}

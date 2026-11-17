@@ -133,7 +133,7 @@ export default function GrupaPromjena() {
 
         promijeni({
             naziv: podaci.get('naziv'),
-            smjer: parseInt(podaci.get('smjer')),
+            smjer: podaci.get('smjer'),
             polaznici: odabraniPolaznici.map(p => p.sifra)
         })
     }
