@@ -20,7 +20,8 @@ export default function GrupaNovi() {
     const [errors, setErrors] = useState({});
     const { showLoading, hideLoading, postaviNaslov } = useLoading()
 
-    useEffect(()=>{postaviNaslov('Nova grupa')})
+
+    useEffect(()=>{ postaviNaslov('Nova grupa')})
 
     useEffect(() => {
         showLoading()
@@ -191,7 +192,7 @@ export default function GrupaNovi() {
                                     <Card.Title className="mb-4">Polaznici</Card.Title>
 
                                     {/* Autocomplete pretraga */}
-                                    <Form.Group className="mb-3 position-relative">
+                                    <Form.Group className="mb-3 position-relative" controlId="pretragaPolaznika">
                                         <Form.Label className="fw-bold">Dodaj polaznika</Form.Label>
                                         <Form.Control
                                             type="text"
@@ -208,30 +209,43 @@ export default function GrupaNovi() {
                                             }}
                                             onKeyDown={handleKeyDown}
                                             isInvalid={!!errors.polaznici}
+                                            role="combobox"
+                                            aria-autocomplete="list"
+                                            aria-expanded={prikaziAutocomplete && filtrirajPolaznike().length > 0}
+                                            aria-controls="lista-polaznika"
+                                            aria-activedescendant={odabraniIndex >= 0 ? `polaznik-opcija-${odabraniIndex}` : undefined}
+                                            aria-label="Pretraži i dodaj polaznika u grupu"
                                         />
                                         <Form.Control.Feedback type="invalid">
                                             {errors.polaznici}
                                         </Form.Control.Feedback>
                                         {prikaziAutocomplete && filtrirajPolaznike().length > 0 && (
-                                            <div className="position-absolute w-100 bg-white border rounded shadow-sm" style={{ zIndex: 1000, maxHeight: '200px', overflowY: 'auto' }}>
+                                            <ul
+                                                id="lista-polaznika"
+                                                role="listbox"
+                                                aria-label="Rezultati pretrage polaznika"
+                                                className="position-absolute w-100 bg-white border rounded shadow-sm list-unstyled mb-0"
+                                                style={{ zIndex: 1000, maxHeight: '200px', overflowY: 'auto' }}
+                                            >
                                                 {filtrirajPolaznike().map((polaznik, index) => (
-                                                    <div
+                                                    <li
                                                         key={polaznik.sifra}
-                                                        className="p-2 cursor-pointer"
+                                                        id={`polaznik-opcija-${index}`}
+                                                        role="option"
+                                                        aria-selected={index === odabraniIndex}
+                                                        className="p-2"
                                                         style={{
                                                             cursor: 'pointer',
                                                             backgroundColor: index === odabraniIndex ? '#007bff' : 'white',
                                                             color: index === odabraniIndex ? 'white' : 'black'
                                                         }}
                                                         onClick={() => dodajPolaznika(polaznik)}
-                                                        onMouseEnter={(e) => {
-                                                            setOdabraniIndex(index)
-                                                        }}
+                                                        onMouseEnter={() => setOdabraniIndex(index)}
                                                     >
                                                         {polaznik.ime} {polaznik.prezime}
-                                                    </div>
+                                                    </li>
                                                 ))}
-                                            </div>
+                                            </ul>
                                         )}
                                     </Form.Group>
 
@@ -272,21 +286,18 @@ export default function GrupaNovi() {
                             </Card>
                         </Col>
                     </Row>
-
-                    <Row className="mt-4">
-                        <Col xs={4}>
+                    <Row>
+                        <Col className="mt-4" xs={4}>
                             <Link to={RouteNames.GRUPE} className="btn btn-danger px-4">
                                 Odustani
                             </Link>
                         </Col>
-                        <Col xs={8} style={{ textAlign: 'right' }}>
+                        <Col className="mt-4" xs={8} style={{ textAlign: 'right' }}>
                             <Button type="submit" variant="success">
-                                Dodaj
+                                Dodaj novu grupu
                             </Button>
                         </Col>
                     </Row>
-
-
                 </Container>
             </Form>
         </>

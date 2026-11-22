@@ -7,8 +7,14 @@ export default function LoadingSpinner() {
   return (
     <>
       {loading && (
-        <div className='loading-spinner-overlay'>
-          <Spinner animation='border' role='status' variant='primary' />
+        <div
+          className='loading-spinner-overlay'
+          role='status'
+          aria-live='polite'
+          aria-label='Učitavanje u tijeku'
+        >
+          <Spinner animation='border' variant='primary' aria-hidden='true' />
+          <span className='visually-hidden'>Učitavanje u tijeku...</span>
         </div>
       )}
     </>

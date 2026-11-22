@@ -73,27 +73,56 @@ export default function SmjerPregledTablica({ smjerovi, navigate, obrisi }) {
         return sorted;
     };
 
+    const getAriaSortValue = (columnKey) => {
+        if (sortConfig.key !== columnKey || sortConfig.direction === null) return 'none';
+        return sortConfig.direction === 'asc' ? 'ascending' : 'descending';
+    };
 
     return (
-        <Table striped bordered hover responsive>
+        <Table striped bordered hover responsive aria-label="Popis smjerova">
             <thead>
                 <tr>
-                    <th onClick={() => handleSort('naziv')} style={{ cursor: 'pointer' }}>
-                        Naziv {getSortIcon('naziv')}
+                    <th
+                        onClick={() => handleSort('naziv')}
+                        style={{ cursor: 'pointer' }}
+                        aria-sort={getAriaSortValue('naziv')}
+                        scope="col"
+                    >
+                        Naziv <span aria-hidden="true">{getSortIcon('naziv')}</span>
                     </th>
-                    <th onClick={() => handleSort('trajanje')} style={{ cursor: 'pointer' }}>
-                        Trajanje {getSortIcon('trajanje')}
+                    <th
+                        onClick={() => handleSort('trajanje')}
+                        style={{ cursor: 'pointer' }}
+                        aria-sort={getAriaSortValue('trajanje')}
+                        scope="col"
+                    >
+                        Trajanje <span aria-hidden="true">{getSortIcon('trajanje')}</span>
                     </th>
-                    <th onClick={() => handleSort('cijena')} style={{ cursor: 'pointer' }}>
-                        Cijena {getSortIcon('cijena')}
+                    <th
+                        onClick={() => handleSort('cijena')}
+                        style={{ cursor: 'pointer' }}
+                        aria-sort={getAriaSortValue('cijena')}
+                        scope="col"
+                    >
+                        Cijena <span aria-hidden="true">{getSortIcon('cijena')}</span>
                     </th>
-                    <th onClick={() => handleSort('datumPokretanja')} style={{ cursor: 'pointer' }}>
-                        Datum pokretanja {getSortIcon('datumPokretanja')}
+                    <th
+                        onClick={() => handleSort('datumPokretanja')}
+                        style={{ cursor: 'pointer' }}
+                        aria-sort={getAriaSortValue('datumPokretanja')}
+                        scope="col"
+                    >
+                        Datum pokretanja <span aria-hidden="true">{getSortIcon('datumPokretanja')}</span>
                     </th>
-                    <th onClick={() => handleSort('aktivan')} style={{ cursor: 'pointer' }}>
-                        Aktivan {getSortIcon('aktivan')}
+                    <th
+                        onClick={() => handleSort('aktivan')}
+                        style={{ cursor: 'pointer' }}
+                        aria-sort={getAriaSortValue('aktivan')}
+                        scope="col"
+                    >
+                        Aktivan <span aria-hidden="true">{getSortIcon('aktivan')}</span>
                     </th>
-                    <th>Akcija</th>
+                    <th scope="col">Akcija</th>
                 </tr>
             </thead>
             <tbody>
@@ -120,18 +149,25 @@ export default function SmjerPregledTablica({ smjerovi, navigate, obrisi }) {
                             <GrValidate
                                 size={25}
                                 color={smjer.aktivan ? 'green' : 'red'}
+                                aria-label={smjer.aktivan ? 'Aktivan' : 'Neaktivan'}
+                                role="img"
                             />
                         </td>
                         <td>
-                            <Button onClick={() => navigate(`/smjerovi/${smjer.sifra}`)} title="Promjeni">
-                                 <FaEdit />
+                            <Button
+                                onClick={() => navigate(`/smjerovi/${smjer.sifra}`)}
+                                aria-label={`Uredi smjer ${smjer.naziv}`}
+                            >
+                                <FaEdit aria-hidden="true" />
                             </Button>
-                                &nbsp;&nbsp;
-                                    <Button
-                                    disabled={!smjer.mozeSeObrisati}
-                                    variant="danger" onClick={() => obrisi(smjer.sifra)} title="Obriši">
-                                        <FaTrash />
-                                    </Button>
+                            &nbsp;&nbsp;
+                            <Button
+                                variant="danger"
+                                onClick={() => obrisi(smjer.sifra)}
+                                aria-label={`Obriši smjer ${smjer.naziv}`}
+                            >
+                                <FaTrash aria-hidden="true" />
+                            </Button>
                         </td>
                     </tr>
                 ))}

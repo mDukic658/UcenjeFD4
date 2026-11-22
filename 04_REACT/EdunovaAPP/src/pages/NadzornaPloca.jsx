@@ -2,15 +2,15 @@ import { useState, useEffect } from "react";
 import GrupaService from "../services/grupe/GrupaService";
 import { Container } from "react-bootstrap";
 import Highcharts from 'highcharts';
-import {HighchartsReact} from 'highcharts-react-official';
+import { HighchartsReact } from 'highcharts-react-official';
 import useLoading from "../hooks/useLoading";
 
 export default function NadzornaPloca() {
 
     const [podaci, setPodaci] = useState([]);
-    const {postaviNaslov} = useLoading()
+    const { postaviNaslov } = useLoading()
 
-    useEffect(()=>{postaviNaslov('Nadzorna ploča')})
+    useEffect(() => { postaviNaslov('Nadzorna ploča') })
 
 
 
@@ -44,10 +44,17 @@ export default function NadzornaPloca() {
             pointFormat: '{series.name}: <b>{point.percentage:.1f}%</b>',
         },
         accessibility: {
-            enabled: false,
+            enabled: true,
             point: {
                 valueSuffix: '%',
             },
+            description: 'Kružni grafikon koji prikazuje broj polaznika po pojedinoj nastavnoj grupi.',
+        },
+        lang: {
+            accessibility: {
+                chartContainerLabel: 'Grafikon: Broj polaznika po grupi',
+                svgContainerLabel: 'Interaktivni grafikon',
+            }
         },
         plotOptions: {
             pie: {

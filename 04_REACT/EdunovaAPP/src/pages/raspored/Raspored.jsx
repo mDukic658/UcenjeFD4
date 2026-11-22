@@ -2,6 +2,8 @@ import { useEffect } from 'react';
 import './Raspored.css';
 import useLoading from '../../hooks/useLoading';
 
+
+
 // Izvučeni tekst termina u varijablu
 const CLASS_TIME = "19:00 - 21:00";
 const DEFENSE_TIME = "OBRANA RADOVA"; // Novi tekst za obranu
@@ -34,9 +36,10 @@ export default function Raspored() {
   const currentYear = today.getFullYear();
   const currentMonth = today.getMonth() + 1; // getMonth() vraća 0-11
   const currentDay = today.getDate();
-  const {postaviNaslov} = useLoading()
 
-  useEffect(()=>{postaviNaslov('Raspored')})
+  const { postaviNaslov } = useLoading()
+
+  useEffect(()=>{ postaviNaslov('Raspored')})
 
   // Funkcija koja provjerava je li proslijeđeni dan, mjesec i godina današnji datum
   const isToday = (dayNum, monthName) => {
@@ -47,7 +50,7 @@ export default function Raspored() {
   return (
     <>
       <div className="container">
-        <h1>PLAN nastave FD4</h1>
+        <h1>Plan nastave FD4</h1>
 
         {/* Svibanj 2026. */}
         <MonthSection 
@@ -146,17 +149,29 @@ function MonthSection({ monthTitle, emptyStart, totalDays, isToday, classTime })
       };
     }
 
+
     let cellClass = "day-cell";
     if (isWeekend) cellClass += " weekend";
     if (hasClass) cellClass += " has-class";
     if (isDefenseDay) cellClass += " defense-class"; // Možete dodati i CSS klasu po želji
 
+    const cellLabel = hasClass
+      ? (isDefenseDay ? `${i}. ${monthTitle} – OBRANA RADOVA` : `${i}. ${monthTitle} – nastava ${classTime}`)
+      : `${i}. ${monthTitle}${isWeekend ? ' (vikend)' : ''}`;
+
     days.push(
-      <div key={i} className={cellClass} style={dynamicStyle}>
-        <span className="day-number">{i}</span>
+      <div
+        key={i}
+        className={cellClass}
+        style={dynamicStyle}
+        role="gridcell"
+        aria-label={cellLabel}
+        {...(activeToday ? { 'aria-current': 'date' } : {})}
+      >
+        <span className="day-number" aria-hidden="true">{i}</span>
         {hasClass && (
-          <div className="class-label">
-            {isDefenseDay ? DEFENSE_TIME : "Studeni 2026." && i === 21 ? '11:00 - 13:00' : classTime}
+          <div className="class-label" aria-hidden="true">
+            {isDefenseDay ? DEFENSE_TIME : "Studeni 2026." && i === 21 ? '09:00 - 11:00' : classTime}
           </div>
         )}
       </div>
@@ -164,24 +179,24 @@ function MonthSection({ monthTitle, emptyStart, totalDays, isToday, classTime })
   }
 
   return (
-    <div className="month-section">
-      <div className="month-title">{monthTitle}</div>
-      <div className="calendar-grid">
-        <div className="weekday-header">Pon</div>
-        <div className="weekday-header">Uto</div>
-        <div className="weekday-header">Sri</div>
-        <div className="weekday-header">Čet</div>
-        <div className="weekday-header">Pet</div>
-        <div className="weekday-header">Sub</div>
-        <div className="weekday-header">Ned</div>
+    <section className="month-section" aria-label={`Nastava za ${monthTitle}`}>
+      <h2 className="month-title">{monthTitle}</h2>
+      <div className="calendar-grid" role="grid" aria-label={`Kalendar nastave za ${monthTitle}`}>
+        <div className="weekday-header" role="columnheader" aria-label="Ponedjeljak">Pon</div>
+        <div className="weekday-header" role="columnheader" aria-label="Utorak">Uto</div>
+        <div className="weekday-header" role="columnheader" aria-label="Srijeda">Sri</div>
+        <div className="weekday-header" role="columnheader" aria-label="Četvrtak">Čet</div>
+        <div className="weekday-header" role="columnheader" aria-label="Petak">Pet</div>
+        <div className="weekday-header" role="columnheader" aria-label="Subota">Sub</div>
+        <div className="weekday-header" role="columnheader" aria-label="Nedjelja">Ned</div>
         
         {/* Prazna polja na početku mjeseca */}
         {Array.from({ length: emptyStart }).map((_, index) => (
-          <div key={`empty-${index}`} className="day-cell empty"></div>
+          <div key={`empty-${index}`} className="day-cell empty" role="gridcell" aria-hidden="true"></div>
         ))}
         
         {days}
       </div>
-    </div>
+    </section>
   );
 }

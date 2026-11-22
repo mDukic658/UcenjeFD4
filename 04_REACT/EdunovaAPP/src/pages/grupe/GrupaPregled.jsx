@@ -26,8 +26,8 @@ export default function GrupaPregled() {
     const { showLoading, hideLoading, postaviNaslov } = useLoading()
     const { showModal } = useModal()
 
-    useEffect(()=>{postaviNaslov('Grupe')})
-    
+    useEffect(()=>{ postaviNaslov('Grupe')})
+
     useEffect(() => {
         showLoading()
         ucitajSmjerove()
@@ -35,7 +35,6 @@ export default function GrupaPregled() {
         ucitajGrupe()
         hideLoading()
     }, [])
-
 
     async function ucitajGrupe() {
         await GrupaService.get().then((odgovor) => {
@@ -71,7 +70,7 @@ export default function GrupaPregled() {
         // Pomicanje tooltipa 15px desno i dolje od miša da ne smeta kursoru
         //console.log(e.pageY)
         if (e.pageY > 250) {
-            setTooltip(prev => ({ ...prev, x: e.pageX + 15, y: e.pageY - 100 }));
+            setTooltip(prev => ({ ...prev, x: e.pageX + 15, y: e.pageY - 200 }));
         } else {
             setTooltip(prev => ({ ...prev, x: e.pageX + 15, y: e.pageY + 15 }));
         }
@@ -82,7 +81,7 @@ export default function GrupaPregled() {
     };
 
     async function obrisi(sifra) {
-        showModal('Sigurno obrisati grupu?', async () => {
+        showModal('Sigurno obrisati?', async () => {
             showLoading()
             await GrupaService.obrisi(sifra)
             ucitajGrupe()
@@ -124,50 +123,65 @@ export default function GrupaPregled() {
 
     return (
         <>
-            <Link to={RouteNames.GRUPE_DODAJ}
+            <Link to={RouteNames.GRUPE_NOVI}
                 className="btn btn-success w-100 my-3">
                 Dodavanje nove grupe
             </Link>
-            <Table hover striped bordered>
+            <Table hover striped bordered aria-label="Popis nastavnih grupa">
                 <thead>
                     <tr>
-                        <th style={{ width: '65%' }}>Naziv</th>
-                        <th style={{ width: '35%' }}>Akcija</th>
+                        <th scope="col" style={{ width: '65%' }}>Naziv</th>
+                        <th scope="col" style={{ width: '35%' }}>Akcija</th>
                     </tr>
                 </thead>
                 <tbody>
                     {grupe && grupe.map((grupa) => (
                         <tr key={grupa.sifra}>
                             <td>
-
-                                <span style={{ fontWeight: 'bold' }}>
-                                    {grupa.naziv} </span>
-                                <span
-                                    className="text-center"
-                                    style={{ cursor: 'pointer' }}
+                                <span style={{ fontWeight: 'bold' }}>{grupa.naziv}</span> &nbsp;
+                                <button
+                                    type="button"
+                                    className="btn btn-link p-0 text-decoration-none text-dark"
+                                    aria-label={`Prikaži polaznike grupe ${grupa.naziv}, ukupno ${grupa.polaznici.length}`}
+                                    aria-expanded={tooltip.vidljivo}
                                     onMouseEnter={() => handleMouseEnter(grupa.polaznici)}
                                     onMouseMove={handleMouseMove}
-                                    onMouseLeave={handleMouseLeave}>({grupa.polaznici.length}) </span>
-
-                                {dohvatiNazivSmjera(grupa.smjer)}</td>
+                                    onMouseLeave={handleMouseLeave}
+                                    onFocus={() => handleMouseEnter(grupa.polaznici)}
+                                    onBlur={handleMouseLeave}
+                                >
+                                    ({grupa.polaznici.length})
+                                </button>,&nbsp;
+                                {dohvatiNazivSmjera(grupa.smjer)}
+                            </td>
                             <td>
-                                <FaFilePdf
-                                    color="#cb72dd"
-                                    style={{ cursor: 'hand', fontSize: '2rem' }}
-                                    onClick={() => generirajPDFZaGrupu(grupa)} title="Generiraj PDF" />
-                                &nbsp;&nbsp;
-                                <FaEdit
-                                    onClick={() => { navigate(`/grupe/${grupa.sifra}`) }}
-                                    title="Promjeni"
-                                    color="green"
-                                    style={{ fontSize: '2rem' }}
-                                />
-                                &nbsp;&nbsp;
-                                <FaTrash
+                                <button
+                                    type="button"
+                                    className="btn btn-link p-0 me-2"
+                                    onClick={() => generirajPDFZaGrupu(grupa)}
+                                    aria-label={`Generiraj PDF za grupu ${grupa.naziv}`}
+                                    style={{ color: '#cb72dd' }}
+                                >
+                                    <FaFilePdf aria-hidden="true" style={{ fontSize: '1.7rem' }} />
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-link p-0 me-2"
+                                    onClick={() => navigate(`/grupe/${grupa.sifra}`)}
+                                    aria-label={`Uredi grupu ${grupa.naziv}`}
+                                    style={{ color: 'green' }}
+                                >
+                                    <FaEdit aria-hidden="true" style={{ fontSize: '1.7rem' }} />
+                                </button>
+                                <button
+                                    type="button"
+                                    className="btn btn-link p-0"
                                     onClick={() => obrisi(grupa.sifra)}
-                                    color="red"
-                                    title="Obriši"
-                                />
+                                    aria-label={`Obriši grupu ${grupa.naziv}`}
+                                    style={{ color: 'red' }}
+                                >
+                                    <FaTrash aria-hidden="true" />
+                                </button>
                             </td>
                         </tr>
                     ))}
@@ -175,20 +189,23 @@ export default function GrupaPregled() {
             </Table>
             {/* Prikaz popisa polaznika (Tooltip) */}
             {tooltip.vidljivo && (
-                <div style={{
-                    position: 'absolute',
-                    top: tooltip.y,
-                    left: tooltip.x,
-                    backgroundColor: 'white',
-                    border: '1px solid #ccc',
-                    padding: '15px',
-                    borderRadius: '5px',
-                    boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
-                    zIndex: 1000,
-                    minWidth: '200px',
-                    pointerEvents: 'none' // Da tooltip ne "treperi" kad miš uđe u njega
-                }}>
-                    <h6>Polaznici u grupi:</h6>
+                <div
+                    role="tooltip"
+                    aria-live="polite"
+                    style={{
+                        position: 'absolute',
+                        top: tooltip.y,
+                        left: tooltip.x,
+                        backgroundColor: 'white',
+                        border: '1px solid #ccc',
+                        padding: '10px',
+                        borderRadius: '5px',
+                        boxShadow: '0 4px 8px rgba(0,0,0,0.2)',
+                        zIndex: 1000,
+                        minWidth: '200px',
+                        pointerEvents: 'none'
+                    }}>
+                    <p className="fw-bold mb-1">Polaznici u grupi:</p>
                     <ol style={{ margin: 0, paddingLeft: '20px' }}>
                         {tooltip.podaci.map(p => (
                             <li key={p.sifra}>{p.ime} {p.prezime}</li>

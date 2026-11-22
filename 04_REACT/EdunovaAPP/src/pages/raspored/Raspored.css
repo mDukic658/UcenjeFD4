@@ -10,20 +10,11 @@
      --weekend-bg: #fafafa;
  }
 
- h1 {
+ .container h1 {
      text-align: center;
      color: #1a202c;
      margin-bottom: 2.5rem;
      font-weight: 600;
- }
-
- .month-section {
-     background-color: var(--card-bg);
-     border-radius: 8px;
-     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
-     margin-bottom: 2.5rem;
-     padding: 1.5rem;
-     border: 1px solid var(--border-color);
  }
 
  .month-title {
@@ -35,6 +26,15 @@
      text-transform: capitalize;
      border-bottom: 2px solid var(--border-color);
      padding-bottom: 0.5rem;
+ }
+
+ .month-section {
+     background-color: var(--card-bg);
+     border-radius: 8px;
+     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05), 0 1px 3px rgba(0, 0, 0, 0.05);
+     margin-bottom: 2.5rem;
+     padding: 1.5rem;
+     border: 1px solid var(--border-color);
  }
 
  .calendar-grid {

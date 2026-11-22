@@ -56,18 +56,17 @@ export default function SmjerPregledGrid({ smjerovi, navigate, obrisi }) {
                                     variant="outline-primary"
                                     className="flex-fill"
                                     onClick={() => navigate(`/smjerovi/${smjer.sifra}`)}
-                                    title="Promjeni"
+                                    aria-label={`Uredi smjer ${smjer.naziv}`}
                                 >
-                                    <FaEdit />
+                                    <FaEdit aria-hidden="true" />
                                 </Button>
                                 <Button
                                     variant="outline-danger"
                                     className="flex-fill"
-                                    disabled={!smjer.mozeSeObrisati}
                                     onClick={() => obrisi(smjer.sifra)}
-                                    title="Obriši"
+                                    aria-label={`Obriši smjer ${smjer.naziv}`}
                                 >
-                                    <FaTrash />
+                                    <FaTrash aria-hidden="true" />
                                 </Button>
                             </Card.Footer>
                         </Card>
