@@ -4,17 +4,23 @@ import { RouteNames } from "../../constants";
 import PolaznikService from "../../services/polaznici/PolaznikService";
 import { ShemaPolaznik } from "../../schemas/ShemaPolaznik";
 import { useState } from "react";
+import useLoading from "../../hooks/useLoading";
 
 
 export default function PolaznikNovi() {
 
     const navigate = useNavigate()
     const [errors, setErrors] = useState({});
+    const { showLoading, hideLoading, postaviNaslov } = useLoading()
+
+    useEffect(()=>{postaviNaslov('Novi polaznik')})
 
     async function dodaj(polaznik) {
+        showLoading()
         await PolaznikService.dodaj(polaznik).then(() => {
-            navigate(RouteNames.POLAZNICI)
+            hideLoading()
         })
+        navigate(RouteNames.POLAZNICI)
     }
 
     function odradiSubmit(e) { // e je event

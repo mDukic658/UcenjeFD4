@@ -4,16 +4,22 @@ import { useNavigate } from "react-router-dom"
 import OperaterService from "../../services/operateri/OperaterService"
 import { ShemaOperater } from "../../schemas/ShemaOperater"
 import { useState } from "react"
+import useLoading from "../../hooks/useLoading"
 
 export default function Registracija() {
 
     const navigate = useNavigate()
     const [errors, setErrors] = useState({})
+    const { showLoading, hideLoading, postaviNaslov } = useLoading()
+
+    useEffect(()=>{postaviNaslov('Registracija')})
 
     async function registriraj(operater) {
+        showLoading()
         await OperaterService.dodaj(operater).then(() => {
-            navigate(RouteNames.LOGIN)
+            hideLoading()
         })
+        navigate(RouteNames.LOGIN)
     }
 
     function odradiSubmit(e) {

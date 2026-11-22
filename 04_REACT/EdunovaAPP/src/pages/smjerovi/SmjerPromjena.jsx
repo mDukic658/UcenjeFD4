@@ -4,6 +4,7 @@ import { Button, Card, Col, Container, Form, Row } from "react-bootstrap";
 import SmjerService from "../../services/smjerovi/SmjerService";
 import { useEffect, useState } from "react";
 import { ShemaSmjer } from "../../schemas/ShemaSmjer";
+import useLoading from "../../hooks/useLoading";
 
 
 export default function SmjerPromjena() {
@@ -13,13 +14,18 @@ export default function SmjerPromjena() {
     const [smjer, setSmjer] = useState({})
     const [aktivan, setAktivan] = useState(false)
     const [errors, setErrors] = useState({});
+    const { showLoading, hideLoading, postaviNaslov } = useLoading()
+
+    useEffect(()=>{postaviNaslov('Promjena smjera')})
 
     async function ucitajSmjer() {
+        showLoading()
         await SmjerService.getBySifra(params.sifra).then((odgovor) => {
             const s = odgovor.data
             s.datumPokretanja = s.datumPokretanja.substring(0, 10)
             setSmjer(s)
             setAktivan(s.aktivan)
+            hideLoading()
         })
     }
 
@@ -28,9 +34,11 @@ export default function SmjerPromjena() {
     }, [])
 
     async function promijeni(smjer) {
+        showLoading()
         await SmjerService.promijeni(params.sifra, smjer).then(() => {
-            navigate(RouteNames.SMJEROVI)
+            hideLoading()
         })
+        navigate(RouteNames.SMJEROVI)
     }
 
     function obradiSubmit(e) { // e je event

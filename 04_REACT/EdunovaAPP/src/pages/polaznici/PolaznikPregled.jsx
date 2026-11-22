@@ -1,9 +1,11 @@
 import { useEffect, useState } from "react"
 import PolaznikService from "../../services/polaznici/PolaznikService"
-import { Row, Col, Card, Button, Container, Pagination, InputGroup, Form } from "react-bootstrap"
+import { Row, Col, Card, Button, Pagination, InputGroup, Form } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { RouteNames } from "../../constants"
 import { FaEdit, FaSearch, FaTrash } from "react-icons/fa"
+import useLoading from "../../hooks/useLoading"
+import useModal from "../../hooks/useModal"
 
 export default function PolaznikPregled() {
 
@@ -15,31 +17,40 @@ export default function PolaznikPregled() {
     const [ukupnoStavki, postaviUkupnoStavki] = useState(0)
     const [uvjetPretrazivanja, setUvjetPretrazivanja] = useState('')
     const velicinaStranice = 4
+    const { showLoading, hideLoading, postaviNaslov } = useLoading()
+    const { showModal } = useModal()
+
+    useEffect(()=>{postaviNaslov('Polaznici')})
 
     useEffect(() => {
         ucitajPolaznike(trenutnaStranica)
     }, [trenutnaStranica, uvjetPretrazivanja])
 
     async function ucitajPolaznike(stranica) {
+        showLoading()
         await PolaznikService.dohvatiStranicu(stranica, velicinaStranice, uvjetPretrazivanja).then((odgovor) => {
             postaviPolaznike(odgovor.data)
             postaviUkupnoStranica(odgovor.ukupnoStranica)
             postaviUkupnoStavki(odgovor.ukupnoStavki)
+            hideLoading()
         })
     }
 
     async function brisanje(sifra) {
-        if (!confirm('Sigurno obrisati?')) return;
-        await PolaznikService.obrisi(sifra);
-        
-        const noveUkupneStavke = ukupnoStavki - 1;
-        const noveUkupneStranice = Math.ceil(noveUkupneStavke / velicinaStranice);
+        showModal('Sigurno obrisati?', async () => {
+            showLoading()
+            await PolaznikService.obrisi(sifra);
 
-        if (trenutnaStranica > noveUkupneStranice && noveUkupneStranice > 0) {
-            postaviTrenutnuStranicu(noveUkupneStranice);
-        } else {
-            ucitajPolaznike(trenutnaStranica);
-        }
+            const noveUkupneStavke = ukupnoStavki - 1;
+            const noveUkupneStranice = Math.ceil(noveUkupneStavke / velicinaStranice);
+
+            if (trenutnaStranica > noveUkupneStranice && noveUkupneStranice > 0) {
+                postaviTrenutnuStranicu(noveUkupneStranice);
+            } else {
+                ucitajPolaznike(trenutnaStranica);
+            }
+            hideLoading()
+        })
     }
 
     function promijeniStranicu(stranica) {
@@ -72,52 +83,52 @@ export default function PolaznikPregled() {
             </InputGroup>
 
 
-                <Row>
-                    {polaznici && polaznici.map((polaznik) => (
-                        <Col key={polaznik.sifra} xs={12} sm={6} lg={4} xl={3} className="mb-4">
-                            <Card className="shadow-sm h-100 border-0">
-                                <div style={{ height: "200px", overflow: "hidden" }}>
-                                    <Card.Img
-                                        variant="top"
-                                        src={polaznik.slika}
-                                        style={{
-                                            objectFit: "cover",
-                                            height: "100%",
-                                            width: "100%"
-                                        }}
-                                    />
+            <Row>
+                {polaznici && polaznici.map((polaznik) => (
+                    <Col key={polaznik.sifra} xs={12} sm={6} lg={4} xl={3} className="mb-4">
+                        <Card className="shadow-sm h-100 border-0">
+                            <div style={{ height: "200px", overflow: "hidden" }}>
+                                <Card.Img
+                                    variant="top"
+                                    src={polaznik.slika}
+                                    style={{
+                                        objectFit: "cover",
+                                        height: "100%",
+                                        width: "100%"
+                                    }}
+                                />
+                            </div>
+
+                            <Card.Body className="d-flex flex-column">
+                                <Card.Title>
+                                    {polaznik.ime} {polaznik.prezime} <span style={{ fontSize: '0.5rem' }} title="OIB" className="fw-semibold text-dark">({polaznik.oib})</span>
+                                </Card.Title>
+
+                                <Card.Text className="text-muted small mb-3">
+                                    <i className="bi bi-envelope"></i> {polaznik.email} <br />
+                                </Card.Text>
+
+                                <div className="mt-auto d-flex gap-2">
+                                    <Button
+                                        variant="outline-primary"
+                                        className="flex-fill"
+                                        onClick={() => navigate(`/polaznici/${polaznik.sifra}`)}
+                                        title="Promjeni">
+                                        <FaEdit />
+                                    </Button>
+                                    <Button
+                                        variant="outline-danger"
+                                        onClick={() => brisanje(polaznik.sifra)}
+                                        title="Obriši"
+                                    >
+                                        <FaTrash />
+                                    </Button>
                                 </div>
-
-                                <Card.Body className="d-flex flex-column">
-                                    <Card.Title>
-                                        {polaznik.ime} {polaznik.prezime} <span style={{fontSize: '0.5rem'}} title="OIB" className="fw-semibold text-dark">({polaznik.oib})</span> 
-                                    </Card.Title>
-
-                                    <Card.Text className="text-muted small mb-3">
-                                        <i className="bi bi-envelope"></i> {polaznik.email} <br />
-                                    </Card.Text>
-
-                                    <div className="mt-auto d-flex gap-2">
-                                        <Button
-                                            variant="outline-primary"
-                                            className="flex-fill"
-                                            onClick={() => navigate(`/polaznici/${polaznik.sifra}`)}
-                                           title="Promjeni">
-                                            <FaEdit />
-                                        </Button>
-                                        <Button
-                                            variant="outline-danger"
-                                            onClick={() => brisanje(polaznik.sifra)}
-                                            title="Obriši"
-                                        >
-                                            <FaTrash />
-                                        </Button>
-                                    </div>
-                                </Card.Body>
-                            </Card>
-                        </Col>
-                    ))}
-                </Row>
+                            </Card.Body>
+                        </Card>
+                    </Col>
+                ))}
+            </Row>
 
             {ukupnoStranica > 1 && (
                 <div className="d-flex justify-content-center">

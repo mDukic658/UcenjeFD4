@@ -4,6 +4,7 @@ import OperaterService from "../../services/operateri/OperaterService"
 import { Form, Button, Row, Col, Container, Card } from "react-bootstrap"
 import { RouteNames } from "../../constants"
 import { z } from 'zod'
+import useLoading from "../../hooks/useLoading"
 
 export default function OperaterPromjena() {
 
@@ -11,6 +12,9 @@ export default function OperaterPromjena() {
     const params = useParams()
     const [operater, setOperater] = useState({})
     const [errors, setErrors] = useState({})
+    const {postaviNaslov} = useLoading()
+
+    useEffect(()=>{postaviNaslov('Promjena operatera')})
 
     // Shema za email i ulogu (bez lozinke)
     const ShemaEmailUloga = z.object({
@@ -28,6 +32,7 @@ export default function OperaterPromjena() {
     }, [])
 
     async function ucitajOperatera() {
+        
         const odgovor = await OperaterService.getBySifra(params.sifra)
         if (!odgovor.success) {
             alert('Operater nije pronađen')

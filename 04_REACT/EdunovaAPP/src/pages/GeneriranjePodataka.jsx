@@ -5,7 +5,7 @@ import SmjerService from '../services/smjerovi/SmjerService';
 import PolaznikService from '../services/polaznici/PolaznikService';
 import GrupaService from '../services/grupe/GrupaService';
 import OperaterService from '../services/operateri/OperaterService';
-import { DATA_SOURCE, IME_APLIKACIJE } from '../constants';
+import { DATA_SOURCE } from '../constants';
 import { smjerovi } from '../services/smjerovi/SmjerPodaci';
 import { operateri } from '../services/operateri/OperaterPodaci';
 import { grupe } from '../services/grupe/GrupaPodaci';
@@ -14,6 +14,7 @@ import GrupaServiceFireBase from '../services/grupe/GrupaServiceFireBase';
 import PolaznikServiceFireBase from '../services/polaznici/PolaznikServiceFireBase';
 import SmjerServiceFireBase from '../services/smjerovi/SmjerServiceFireBase';
 import OperaterServiceFireBase from '../services/operateri/OperaterServiceFireBase';
+import useLoading from '../hooks/useLoading';
 
 
 export default function GeneriranjePodataka() {
@@ -23,8 +24,9 @@ export default function GeneriranjePodataka() {
     const [brojOperatera, setBrojOperatera] = useState(5);
     const [poruka, setPoruka] = useState(null);
     const [loading, setLoading] = useState(false);
+    const {postaviNaslov} = useLoading()
 
-    useEffect(() => { document.title = 'Generiranje podataka, ' + IME_APLIKACIJE })
+    useEffect(()=>{postaviNaslov('Generiranje podataka')})
 
     // Postavi faker na hrvatski jezik
     const faker = new Faker({
@@ -586,6 +588,8 @@ const handleMemorijaULocalStorage = async () => {
                 Ako želite početi ispočetka, prvo obrišite postojeće podatke.
             </Alert>
 
+            {DATA_SOURCE!='firebase' && (
+                <>
             <hr className="my-4" />
 
             <h3>Brisanje podataka</h3>
@@ -640,6 +644,7 @@ const handleMemorijaULocalStorage = async () => {
                 <strong>Oprez!</strong> Brisanje podataka je trajna akcija i ne može se poništiti.
             </Alert>
 
+            </>)}
 
 
 

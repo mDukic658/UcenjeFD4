@@ -43,6 +43,9 @@ npm install @rive-app/react-canvas
 // rad s firebase
 npm install firebase
 
+// rad s sass
+npm install sass
+
 
 // Zanimljivije zavisnosti
 "@popperjs/core": "^2.11.6",

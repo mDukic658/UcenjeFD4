@@ -3,20 +3,28 @@ import { RouteNames } from "../../constants"
 import { Link, useNavigate } from "react-router-dom"
 import OperaterService from "../../services/operateri/OperaterService"
 import { ShemaOperater } from "../../schemas/ShemaOperater"
-import { useState } from "react"
+import { useEffect, useState } from "react"
+import useLoading from "../../hooks/useLoading"
 
 export default function OperaterNovi() {
 
     const navigate = useNavigate()
     const [errors, setErrors] = useState({})
+    const { showLoading, hideLoading, postaviNaslov } = useLoading()
+
+    useEffect(()=>{postaviNaslov('Novi operater')})
 
     async function dodaj(operater) {
+        showLoading()
         const rezultat = await OperaterService.dodaj(operater)
         if (rezultat.success) {
+            hideLoading()
             navigate(RouteNames.OPERATERI)
         } else {
             alert(rezultat.message || 'Greška pri dodavanju operatera')
+            hideLoading()
         }
+
     }
 
     function odradiSubmit(e) {

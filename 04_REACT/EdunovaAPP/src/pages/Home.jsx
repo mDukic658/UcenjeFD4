@@ -7,6 +7,7 @@ import SmjerService from "../services/smjerovi/SmjerService";
 import PolaznikService from "../services/polaznici/PolaznikService";
 import GrupaService from "../services/grupe/GrupaService";
 import { LordIcon  } from '@lordicon/react';
+import useLoading from "../hooks/useLoading";
 
 export default function Home() {
     const [brojSmjerova, setBrojSmjerova] = useState(0);
@@ -15,7 +16,9 @@ export default function Home() {
     const [animatedSmjerovi, setAnimatedSmjerovi] = useState(0);
     const [animatedPolaznici, setAnimatedPolaznici] = useState(0);
     const [animatedGrupe, setAnimatedGrupe] = useState(0);
+    const {postaviNaslov} = useLoading()
 
+    useEffect(()=>{postaviNaslov('Home')})
 
 
     useEffect(() => {

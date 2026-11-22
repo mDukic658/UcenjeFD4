@@ -6,6 +6,7 @@ import GrupaService from "../../services/grupe/GrupaService"
 import SmjerService from "../../services/smjerovi/SmjerService"
 import PolaznikService from "../../services/polaznici/PolaznikService"
 import { ShemaGrupa } from "../../schemas/ShemaGrupa"
+import useLoading from "../../hooks/useLoading"
 
 export default function GrupaNovi() {
 
@@ -17,10 +18,15 @@ export default function GrupaNovi() {
     const [prikaziAutocomplete, setPrikaziAutocomplete] = useState(false)
     const [odabraniIndex, setOdabraniIndex] = useState(-1)
     const [errors, setErrors] = useState({});
+    const { showLoading, hideLoading, postaviNaslov } = useLoading()
+
+    useEffect(()=>{postaviNaslov('Nova grupa')})
 
     useEffect(() => {
+        showLoading()
         ucitajSmjerove()
         ucitajPolaznike()
+        hideLoading()
     }, [])
 
     async function ucitajSmjerove() {
@@ -88,9 +94,11 @@ export default function GrupaNovi() {
     }
 
     async function dodaj(grupa) {
+        showLoading()
         await GrupaService.dodaj(grupa).then(() => {
-            navigate(RouteNames.GRUPE)
+            hideLoading()
         })
+        navigate(RouteNames.GRUPE)
     }
 
     function odradiSubmit(e) {

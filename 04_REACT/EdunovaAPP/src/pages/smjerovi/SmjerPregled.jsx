@@ -7,16 +7,23 @@ import useBreakpoint from "../../hooks/useBreakpoint"
 import SmjerPregledTablica from "./SmjerPregledTablica"
 import SmjerPregledGrid from "./SmjerPregledGrid"
 import GrupaService from "../../services/grupe/GrupaService"
+import useLoading from "../../hooks/useLoading"
+import useModal from "../../hooks/useModal"
 
 
 export default function SmjerPregled() {
 
     const [smjerovi, setSmjerovi] = useState([])
+    const { showLoading, hideLoading, postaviNaslov } = useLoading()
+
+    useEffect(()=>{postaviNaslov('Smjerovi')})
 
     const navigate = useNavigate()
     const sirina = useBreakpoint();
+    const { showModal } = useModal();
 
     async function ucitajSmjerove() {
+        showLoading();
         // alternativa funkciji obrisi
         const grupeRezultat = await GrupaService.get();
 
@@ -31,7 +38,9 @@ export default function SmjerPregled() {
             
 
             setSmjerovi(odgovor.data)
+            hideLoading()
         })
+        
     }
 
     useEffect(() => {
@@ -41,21 +50,22 @@ export default function SmjerPregled() {
 
 
     async function obrisi(sifra) {
-        if (!confirm('Sigurno obrisati?')) return;
+       showModal('Sigurno obrisati?', async () => {
+            // Provjeri da li je smjer korišten u grupama
+            const grupeRezultat = await GrupaService.get();
+            const grupeKojeKoristeSmjer = grupeRezultat.data.filter(grupa => grupa.smjer == sifra);
 
-        // Provjeri da li je smjer korišten u grupama
-        const grupeRezultat = await GrupaService.get();
-        const grupeKojeKoristeSmjer = grupeRezultat.data.filter(grupa => grupa.smjer === parseInt(sifra));
+            if (grupeKojeKoristeSmjer.length > 0) {
+                showModal(`Ne možete obrisati ovaj smjer jer je postavljen na ${grupeKojeKoristeSmjer.length} grupa/e. Prvo obrišite ili promijenite smjer u tim grupama.`, async () => {})
+                return;
+            }
 
-        if (grupeKojeKoristeSmjer.length > 0) {
-            alert(`Ne možete obrisati ovaj smjer jer je postavljen na ${grupeKojeKoristeSmjer.length} grupa/e. Prvo obrišite ili promijenite smjer u tim grupama.`);
-            return;
-        }
-
-
-        await SmjerService.obrisi(sifra);
-        await SmjerService.get().then((odgovor) => {
-            setSmjerovi(odgovor.data)
+            showLoading()
+            await SmjerService.obrisi(sifra);
+            await SmjerService.get().then((odgovor) => {
+                setSmjerovi(odgovor.data)
+                hideLoading()
+            })
         })
     }
 

@@ -25,6 +25,8 @@ import useAuth from './hooks/useAuth'
 import Login from './pages/login/Login'
 import Registracija from './pages/registracija/Registracija'
 import NadzornaPloca from './pages/NadzornaPloca'
+import LoadingSpinner from './components/LoadingSpinner'
+import PotvrdaModal from './components/PotvrdaModal'
 
 
 
@@ -33,10 +35,13 @@ function App() {
   const { isLoggedIn, authUser } = useAuth()
 
   return (
-    <Container>
-      <Izbornik />
-      <Container className='app'>
-        <Routes>
+    <>
+      <LoadingSpinner />
+      <PotvrdaModal />
+      <Container>
+        <Izbornik />
+        <Container className='app'>
+          <Routes>
             <Route path={RouteNames.HOME} element={<Home />} />
 
             {isLoggedIn ? (
@@ -52,8 +57,8 @@ function App() {
                 <Route path={RouteNames.GRUPE} element={<GrupaPregled />} />
                 <Route path={RouteNames.GRUPE_DODAJ} element={<GrupaNovi />} />
                 <Route path={RouteNames.GRUPE_PROMJENA} element={<GrupaPromjena />} />
-                
-                
+
+
                 {authUser.uloga === 'admin' && (
                   <>
                     <Route path={RouteNames.OPERATERI} element={<OperaterPregled />} />
@@ -64,7 +69,7 @@ function App() {
                   </>
                 )}
 
-                
+
                 <Route path={RouteNames.APLIKACIJE_POLAZNIKA} element={<AplikacijePolaznika />} />
                 <Route path={RouteNames.RASPORED} element={<Raspored />} />
 
@@ -76,10 +81,11 @@ function App() {
               </>
             )}
           </Routes>
+        </Container>
+        <hr />
+        &copy; {IME_APLIKACIJE}
       </Container>
-      <hr />
-      &copy; {IME_APLIKACIJE}
-    </Container>
+    </>
   )
 }
 

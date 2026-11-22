@@ -3,10 +3,14 @@ import GrupaService from "../services/grupe/GrupaService";
 import { Container } from "react-bootstrap";
 import Highcharts from 'highcharts';
 import {HighchartsReact} from 'highcharts-react-official';
+import useLoading from "../hooks/useLoading";
 
 export default function NadzornaPloca() {
 
     const [podaci, setPodaci] = useState([]);
+    const {postaviNaslov} = useLoading()
+
+    useEffect(()=>{postaviNaslov('Nadzorna ploča')})
 
 
 

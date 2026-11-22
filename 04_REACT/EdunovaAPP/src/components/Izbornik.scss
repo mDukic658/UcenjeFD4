@@ -1,0 +1,55 @@
+$boja-teksta: #184967;
+
+.navbar {
+
+  .navbar-brand {
+    font-weight: bold;
+    color: $boja-teksta ;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+
+  .nav-link {
+    color: $boja-teksta ;
+
+    &:hover {
+      color: $boja-teksta ;
+      background-color: rgba($boja-teksta, 0.1);
+    }
+  }
+
+  .dropdown-menu {
+    .dropdown-item {
+      color: $boja-teksta ;
+
+      &:hover,
+      &:focus {
+        color: $boja-teksta ;
+        background-color: rgba($boja-teksta, 0.1);
+      }
+    }
+  }
+
+  @media (max-width: 991.98px) {
+    .navbar-nav {
+      text-align: center;
+    }
+  }
+}
+
+.navbar-nav {
+  .nav-item {
+    margin: 0 5px;
+
+    .nav-link {
+      border-radius: 4px;
+      padding: 8px 12px;
+
+      &.active {
+        background-color: rgba(255, 255, 255, 0.2);
+        color: $boja-teksta ;
+      }
+    }
+  }
+}

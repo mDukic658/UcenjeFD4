@@ -6,6 +6,7 @@ import PolaznikService from "../../services/polaznici/PolaznikService"
 import { Button, Col, Form, Row, Container, Card, Table } from "react-bootstrap"
 import { RouteNames } from "../../constants"
 import { ShemaGrupa } from "../../schemas/ShemaGrupa"
+import useLoading from "../../hooks/useLoading"
 
 export default function GrupaPromjena() {
 
@@ -19,11 +20,16 @@ export default function GrupaPromjena() {
     const [prikaziAutocomplete, setPrikaziAutocomplete] = useState(false)
     const [odabraniIndex, setOdabraniIndex] = useState(-1)
     const [errors, setErrors] = useState({});
+    const { showLoading, hideLoading, postaviNaslov } = useLoading()
+
+    useEffect(()=>{postaviNaslov('Promjena grupe')})
 
     useEffect(() => {
+        showLoading()
         ucitajGrupu()
         ucitajSmjerove()
         ucitajPolaznike()
+        hideLoading()
     }, [])
 
     useEffect(() => {
@@ -104,9 +110,11 @@ export default function GrupaPromjena() {
     }
 
     async function promijeni(grupa) {
+        showLoading()
         await GrupaService.promijeni(params.sifra, grupa).then(() => {
-            navigate(RouteNames.GRUPE)
+            hideLoading()
         })
+        navigate(RouteNames.GRUPE)
     }
 
     function odradiSubmit(e) {

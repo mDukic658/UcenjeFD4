@@ -6,6 +6,7 @@ import { ShemaSmjer } from "../../schemas/ShemaSmjer";
 import { useEffect, useState } from "react";
 import { useRive } from '@rive-app/react-canvas';
 import useBreakpoint from "../../hooks/useBreakpoint";
+import useLoading from "../../hooks/useLoading";
 
 
 export default function SmjerNovi() {
@@ -16,6 +17,10 @@ export default function SmjerNovi() {
     const [spustiRuke, setSpustiRuke] = useState(true);
     const [numLook, setNumLook] = useState(null);
     const sirina = useBreakpoint();
+    const { showLoading, hideLoading, postaviNaslov } = useLoading()
+
+
+    useEffect(()=>{postaviNaslov('Novi smjer')})
 
     const { rive, RiveComponent } = useRive({
         src: '/animacija.riv',
@@ -42,9 +47,11 @@ export default function SmjerNovi() {
     }, [errors, isHandsUp, fail, rive, spustiRuke]);
 
     async function dodaj(smjer) {
+        showLoading()
         await SmjerService.dodaj(smjer).then(() => {
-            navigate(RouteNames.SMJEROVI)
+            hideLoading()
         })
+        navigate(RouteNames.SMJEROVI)
     }
 
     function obradiSubmit(e) { // e je event

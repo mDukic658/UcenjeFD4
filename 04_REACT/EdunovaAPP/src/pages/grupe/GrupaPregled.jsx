@@ -1,12 +1,14 @@
 import { useEffect, useState } from "react"
 import GrupaService from "../../services/grupe/GrupaService"
 import SmjerService from "../../services/smjerovi/SmjerService"
-import { Button, Table } from "react-bootstrap"
+import { Table } from "react-bootstrap"
 import { Link, useNavigate } from "react-router-dom"
 import { RouteNames } from "../../constants"
 import { FaEdit, FaFilePdf, FaTrash } from "react-icons/fa"
 import GrupaPDFGenerator from "../../components/GrupaPDFGenerator"
 import PolaznikService from "../../services/polaznici/PolaznikService"
+import useLoading from "../../hooks/useLoading"
+import useModal from "../../hooks/useModal"
 
 
 export default function GrupaPregled() {
@@ -21,12 +23,19 @@ export default function GrupaPregled() {
         podaci: []
     })
     const navigate = useNavigate()
+    const { showLoading, hideLoading, postaviNaslov } = useLoading()
+    const { showModal } = useModal()
 
+    useEffect(()=>{postaviNaslov('Grupe')})
+    
     useEffect(() => {
+        showLoading()
         ucitajSmjerove()
         ucitajPolaznike()
         ucitajGrupe()
+        hideLoading()
     }, [])
+
 
     async function ucitajGrupe() {
         await GrupaService.get().then((odgovor) => {
@@ -73,11 +82,12 @@ export default function GrupaPregled() {
     };
 
     async function obrisi(sifra) {
-        if (!confirm('Sigurno obrisati')) {
-            return
-        }
-        await GrupaService.obrisi(sifra)
-        ucitajGrupe()
+        showModal('Sigurno obrisati grupu?', async () => {
+            showLoading()
+            await GrupaService.obrisi(sifra)
+            ucitajGrupe()
+            hideLoading()
+        })
     }
 
     function dohvatiNazivSmjera(sifraSmjera) {
@@ -121,16 +131,16 @@ export default function GrupaPregled() {
             <Table hover striped bordered>
                 <thead>
                     <tr>
-                        <th style={{width: '65%'}}>Naziv</th>
-                        <th style={{width: '35%'}}>Akcija</th>
+                        <th style={{ width: '65%' }}>Naziv</th>
+                        <th style={{ width: '35%' }}>Akcija</th>
                     </tr>
                 </thead>
                 <tbody>
                     {grupe && grupe.map((grupa) => (
                         <tr key={grupa.sifra}>
                             <td>
-                                
-                                <span style={{fontWeight: 'bold'}}>
+
+                                <span style={{ fontWeight: 'bold' }}>
                                     {grupa.naziv} </span>
                                 <span
                                     className="text-center"
@@ -138,25 +148,25 @@ export default function GrupaPregled() {
                                     onMouseEnter={() => handleMouseEnter(grupa.polaznici)}
                                     onMouseMove={handleMouseMove}
                                     onMouseLeave={handleMouseLeave}>({grupa.polaznici.length}) </span>
-                                    
-                                    {dohvatiNazivSmjera(grupa.smjer)}</td>
+
+                                {dohvatiNazivSmjera(grupa.smjer)}</td>
                             <td>
                                 <FaFilePdf
                                     color="#cb72dd"
                                     style={{ cursor: 'hand', fontSize: '2rem' }}
                                     onClick={() => generirajPDFZaGrupu(grupa)} title="Generiraj PDF" />
                                 &nbsp;&nbsp;
-                                <FaEdit 
-                                onClick={() => { navigate(`/grupe/${grupa.sifra}`) }}
-                                title="Promjeni"
-                                color="green"
-                                style={{fontSize: '2rem'}}
+                                <FaEdit
+                                    onClick={() => { navigate(`/grupe/${grupa.sifra}`) }}
+                                    title="Promjeni"
+                                    color="green"
+                                    style={{ fontSize: '2rem' }}
                                 />
                                 &nbsp;&nbsp;
                                 <FaTrash
-                                onClick={() => obrisi(grupa.sifra)}
-                                color="red"
-                                title="Obriši"
+                                    onClick={() => obrisi(grupa.sifra)}
+                                    color="red"
+                                    title="Obriši"
                                 />
                             </td>
                         </tr>
